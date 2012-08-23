@@ -1,0 +1,20 @@
+# File types #
+##############
+*.pyc
+*.csv
+
+# Directories #
+###############
+logs/
+
+# Specific files #
+##################
+git-remove-history
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+*~
