@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-#from django.views.generic.simple import direct_to_template
+from django.views.generic.simple import direct_to_template
 from controles.views import *
 
 # Uncomment the next two lines to enable the admin:
@@ -7,6 +7,7 @@ from controles.views import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+	url(r'^ingreso/$', direct_to_template, {'template': 'ingreso.html'}),
 	url(r'^$', ingresar, name='home')
     # Examples:
     # url(r'^$', 'geoffroea.views.home', name='home'),

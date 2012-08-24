@@ -1,8 +1,12 @@
 <html>
 	<head>
-		<title>Ingreso al Control</title>
+		{% block titulo %}
+			<title>Ingreso al Control</title>
+		{% endblock titulo %}
 	</head>
 	<body>
-		<p>{{ formulario }}</p>
+		{% block cuerpo %}
+			<p>{{ formulario }}</p>
+		{% endblock cuerpo %}
 	</body>
 </html>

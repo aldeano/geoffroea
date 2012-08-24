@@ -15,7 +15,7 @@ def ingresar(request):
 			if acceso is not None:
 				if acceso.is_active:
 					login(request, acceso)
-					return HttpResponseRedirect('/control')
+					return HttpResponseRedirect('/ingreso')
 				else:
 					return render(request, 'index.html', dicc)
 			else:
