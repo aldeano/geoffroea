@@ -7,7 +7,7 @@ from controles.views import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^ingreso/$', direct_to_template, {'template': 'ingreso.html'}),
+	url(r'^ingreso/$', direct_to_template, {'template': 'ingreso.html'}, name="ingreso"),
 	url(r'^$', ingresar, name='home')
     # Examples:
     # url(r'^$', 'geoffroea.views.home', name='home'),

@@ -3,12 +3,13 @@ uso: python manage.py test controles
 """
 
 from django.test import TestCase
+from django.core.urlresolvers import reverse
 
 class ControlTest(TestCase):
 
     def test_urls_correctas(self):
         
-        urls_correctas  = ("/", "/ingreso/")
+        urls_correctas  = (reverse("home"), reverse("ingreso"))
         
         for url in urls_correctas:
             respuesta = self.client.get(url)
