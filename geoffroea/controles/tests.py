@@ -4,6 +4,8 @@ uso: python manage.py test controles
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+from controles.models import TipoUsuario
 
 class ControlTest(TestCase):
 
@@ -22,3 +24,9 @@ class ControlTest(TestCase):
         for url in urls_incorrectas:
             respuesta = self.client.get(url)
             self.assertEqual(respuesta.status_code, 404)
+
+class UsuariosTest(TestCase):
+
+    def test_permisos(self):
+        self.u1 = User.objects.create(username="Administrador")
+        self.up1 = TipoUsuario.objects.create(usuario=self.u1,tipo="adm")
