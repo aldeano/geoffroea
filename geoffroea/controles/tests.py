@@ -30,3 +30,4 @@ class UsuariosTest(TestCase):
     def test_permisos(self):
         self.u1 = User.objects.create(username="Administrador")
         self.up1 = TipoUsuario.objects.create(usuario=self.u1,tipo="adm")
+        self.assertEqual(self.up1.tipo,"adm")

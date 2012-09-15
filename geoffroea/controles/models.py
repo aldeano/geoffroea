@@ -10,5 +10,5 @@ class TipoUsuario(models.Model):
 		("insp", "Inspector")
 		)
 
-	usuario = models.OneToOneField(User)
+	usuario = models.OneToOneField(User, unique=True)
 	tipo = models.CharField(choices=tipos_usuarios,max_length=4)
