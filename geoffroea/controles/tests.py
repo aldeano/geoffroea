@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 uso: python manage.py test controles
 """
