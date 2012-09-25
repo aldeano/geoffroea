@@ -6,7 +6,7 @@ uso: python manage.py test controles
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from controles.models import TipoUsuario
+from controles.models import *
 
 class ControlTest(TestCase):
 
@@ -26,9 +26,14 @@ class ControlTest(TestCase):
             respuesta = self.client.get(url)
             self.assertEqual(respuesta.status_code, 404)
 
-class UsuariosTest(TestCase):
+class ModelosTest(TestCase):
 
     def test_permisos(self):
         self.u1 = User.objects.create(username="Administrador")
         self.up1 = TipoUsuario.objects.create(usuario=self.u1,tipo="adm")
         self.assertEqual(self.up1.tipo,"adm")
+
+    def test_ccff(self):
+        ccff = ControlesFronterizos.objects.create(
+            nombre="Chacalluta",
+            )

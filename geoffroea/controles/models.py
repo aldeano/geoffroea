@@ -409,6 +409,6 @@ class ControlesFronterizos(models.Model):
 	latitud = models.DecimalField(max_digits=11,decimal_places=8)
 	longitud = models.DecimalField(max_digits=11,decimal_places=8)
 	turno = models.CharField(choices=horarios_ccff,max_length=12)
-	horario_inicio = models.TimeField()
-	horario_termino = models.TimeField()
+	horario_inicio = models.TimeField(null=True)
+	horario_termino = models.TimeField(null=True)
 	comuna = models.CharField(choices=comunas,max_length=25)
