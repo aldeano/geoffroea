@@ -34,6 +34,16 @@ class ModelosTest(TestCase):
         self.assertEqual(self.up1.tipo,"adm")
 
     def test_ccff(self):
-        ccff = ControlesFronterizos.objects.create(
+        self.ccff = ControlesFronterizos(
             nombre="Chacalluta",
+            region="XV",
+            latitud="17.435",
+            longitud="32.456",
+            turno="continuado",
+            comuna="15101",
             )
+        self.ccff.save()
+        self.ccff.inspectores.create(username="testeador")
+
+        self.assertEqual(self.ccff.turno, "continuado")
+        self.assertEqual(self.ccff.comuna, "15101")
