@@ -1,4 +1,36 @@
 # -*- coding: utf-8 -*-
+
+tipos_usuarios = (
+    ("adm", "Administrador"),
+    ("er", "Encargado(a) Regional"),
+    ("jf", "Jefe(a) de Turno"),
+    ("insp", "Inspector")
+    )
+
+horarios_ccff = (
+    ("continuado", "continuado"),
+    ("turnos", "turnos"),
+    ("esporadico", "esporádico")
+    )
+
+tipo_transporte = (
+    ("nave", "Nave"),
+    ("avion", "Avión"),
+    ("tren", "Tren"),
+    ("bus", "Bus"),
+    ("camion", "Camión"),
+    ("auto", "Auto"),
+    ("moto", "Moto"),
+    ("otro", "Otro")
+    )
+
+medidas_destruccion = (
+    ("incineracion", "Incineración"),
+    ("autoclave", "Autoclave"),
+    ("enterramiento", "Enterramiento"),
+    ("otro", "Otro")
+    )
+
 #obtenido en https://github.com/witoi/django-cl/
 comunas = (
     # ('15', u'Región de Arica y Parinacota'),
