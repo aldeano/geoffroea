@@ -87,6 +87,9 @@ class Dia_CCFF_Terrestre(Dia)
 	bus_ffaa_ingresado = models.IntegerField(max_digits=3)
 	bus_ffaa_inspeccionado = models.IntegerField(max_digits=3)
 
+	def __unicode__(self):
+		return self.fecha
+
 
 class Dia_CCFF_Maritimo(Dia):
 
@@ -106,6 +109,9 @@ class Dia_CCFF_Maritimo(Dia):
 	guerra_ffaa_inspeccionado = models.IntegerField(max_digits=3)
 	pas_carga_ffaa_ingresado = models.IntegerField(max_digits=3)
 	pas_carga_ffaa_inspeccionado = models.IntegerField(max_digits=3)
+
+	def __unicode__(self):
+		return self.fecha
 
 
 class Dia_CCFF_Aereo(dia):
@@ -127,11 +133,21 @@ class Dia_CCFF_Aereo(dia):
 	heli_ffaa_ingresado = models.IntegerField(max_digits=3)
 	heli_ffaa_inspeccionado = models.IntegerField(max_digits=3)
 
+	def __unicode__(self):
+		return self.fecha
+
 
 class Pasajero(models.Model):
 
-	fecha = models.DateField()
-
+	fecha = models.DateField(blank=False)
+	inspector = models.ForeignKey(User,blank=False)
+	tipo_doc = models.CharField(choices=tipos_documentos,blank=False)
+	n_doc = models.CharField(max_length=15,blank=False)
+	nombres_apellidos = models.CharField(max_length=40,blank=False)
+	genero = models.CharField(choices=opciones_genero)
+	declara = models.Booleanfield()
+	proceso = models.Booleanfield()
+	pais_origen
 
 class Intercepciones(models.Model):
 	
@@ -145,12 +161,16 @@ class Turno(models.Model):
 	cores = models.CharField()
 	quemas = models.ManyToManyField(Quema)
 
+
 class Quema(models.Model):
 
 	dia = models.DateField()
 	rdi = models.ManyToManyField(Dia)
 	control = models.ManyToManyField(ControlesFronterizos)
+
+
 class Acta_Destruccion(models.Model):
+
 	numero = models.IntegerField(unique=True,blank=False)
 	region = models.IntegerField(blank=False)
 	codigo_ccff = models.CharField(max_length=8,blank=False)
@@ -167,7 +187,9 @@ class Acta_Destruccion(models.Model):
 	medida_aplicada = models.CharField(choices=medidas_destruccion,blank=False)
 	observaciones = models.TextField()
 
+
 class Acta_Intercepcion(models.Model):
+	
 	numero = models.IntegerField(unique=True,blank=False)
 	region = models.IntegerField(blank=False)
 	codigo_ccff = models.CharField(max_length=8,blank=False)

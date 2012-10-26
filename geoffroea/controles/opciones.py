@@ -7,6 +7,17 @@ tipos_usuarios = (
     ("insp", "Inspector")
     )
 
+tipos_documentos = (
+    ("ci", "Carnet de Identidad"),
+    ("pas", "Pasaporte"),
+    ("otro", "Otro")
+    )
+
+opciones_genero = (
+    ("m", "Masculino"),
+    ("f", "Femenino")
+    )
+
 horarios_ccff = (
     ("continuado", "continuado"),
     ("turnos", "turnos"),
