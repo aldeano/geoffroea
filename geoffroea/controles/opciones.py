@@ -102,88 +102,49 @@ para definir la lista final '''
             ]) 
     return lista
 
-'''
-Listado de puertos que tengo que modificar para hacerlos presentables
-<option value="2"   >PTO. DE ARICA</option>
-                                        
-<option value="9"   >PUERTO DE IQUIQUE</option>
 
-<option value="10"   >PUERTO DE PATACHE</option>
-
-<option value="11"   >PUERTO DE PATILLO</option>
-
-<option value="18"   >PUERTO DE MEJILLONES</option>
-
-<option value="14"   >CALETA COLOSO</option>
-
-<option value="19"   >PUERTO DE TOCOPILLA</option>
-
-<option value="16"   >PUERTO DE ANGAMOS</option>
-
-<option value="17"   >PUERTO DE ANTOFAGASTA</option>
-
-<option value="15"   >CALETA MICHILLA</option>
-
-<option value="27"   >PUERTO DE BARQUITO</option>
-
-<option value="100"   >PUERTO PUNTA TOTORALILLO</option>
-
-<option value="26"   >PUERTO DE CALDERA</option>
-
-<option value="30"   >PUERTO DE HUASCO</option>
-
-<option value="32"   >PUNTA DE CHUNGOS</option>
-
-<option value="34"   >PUERTO DE COQUIMBO</option>
-
-<option value="35"   >PUERTO DE GUAYACAN</option>
-
-<option value="38"   >PUERTO POLICARPO TORO</option>
-
-<option value="41"   >PUERTO DE QUINTERO</option>
-
-<option value="42"   >PUERTO DE VENTANAS</option>
-
-<option value="43"   >PUERTO DE SAN ANTONIO</option>
-
-<option value="97"   >PUERTO SAN JUAN BAUTISTA</option>
-
-<option value="44"   >PUERTO DE VALPARAISO</option>
-
-<option value="51"   >PUERTO DE PENCO</option>
-
-<option value="52"   >PUERTO DE SAN VICENTE</option>
-
-<option value="54"   >PUERTO MOLO 500</option>
-
-<option value="50"   >PUERTO DE LIRQUEN</option>
-
-<option value="49"   >PUERTO DE CORONEL</option>
-
-<option value="53"   >PUERTO DE TALCAHUANO</option>
-
-<option value="95"   >PUERTO DE ANCUD</option>
-
-<option value="59"   >PUERTO DE CASTRO</option>
-
-<option value="64"   >PTO. DE PUERTO MONTT</option>
-
-<option value="65"   >PUERTO DE SAN JOSÉ</option>
-
-<option value="67"   >PUERTO DE CORRAL</option>
-
-<option value="75"   >PUERTO CHACABUCO</option>
-
-<option value="77"   >PUERTO NAVARINO</option>
-
-<option value="96"   >PUERTO WILLIAMS</option>
-
-<option value="98"   >NUEVO PUERTO DE BAHÍA CATALINA</option>
-
-<option value="79"   >PTO. JOSÉ SANTOS MARDONES</option>
-
-<option value="83"   >PTO. DE PUERTO NATALES</option>
-'''
+puertos = (
+    ("Arica", "Puerto De Arica"),   
+    ("Iquique", "Puerto De Iquique"),
+    ("Patache", "Puerto De Patache"),
+    ("Patillo", "Puerto De Patillo"),
+    ("Mejillones", "Puerto De Mejillones"),
+    ("Coloso", "Caleta Coloso"),
+    ("Tocopilla", "Puerto De Tocopilla"),
+    ("Angamos", "Puerto De Angamos"),
+    ("Antofagasta", "Puerto De Antofagasta"),
+    ("Michilla", "Caleta Michilla"),
+    ("Barquito", "Puerto De Barquito"),
+    ("Pta_Totoralillo", "Puerto Punta Totoralillo"),
+    ("Caldera", "Puerto De Caldera"),
+    ("Huasco", "Puerto De Huasco"),
+    ("Pta_Chungos", "Punta De Chungos"),
+    ("Coquimbo", "Puerto De Coquimbo"),
+    ("Guayacan", "Puerto De Guayacan"),
+    ("Pol_Toro", "Puerto Policarpo Toro"),
+    ("Quintero", "Puerto De Quintero"),
+    ("Ventanas", "Puerto De Ventanas"),
+    ("Sn_Antonio", "Puerto De San Antonio"),
+    ("Sn_Juan", "Puerto San Juan Bautista"),
+    ("Valparaiso", "Puerto De Valparaiso"),
+    ("Penco", "Puerto De Penco"),
+    ("Sn_Vicente", "Puerto De San Vicente"),
+    ("Molo", "Puerto Molo 500"),
+    ("Lirquen", "Puerto De Lirquen"),
+    ("Coronel", "Puerto De Coronel"),
+    ("Talcahuano", "Puerto De Talcahuano"),
+    ("Ancud", "Puerto De Ancud"),
+    ("Castro", "Puerto De Castro"),
+    ("Pto_Montt", "Pto. De Puerto Montt"),
+    ("Sn_Jose", "Puerto De San José"),
+    ("Corral", "Puerto De Corral"),
+    ("Pto_Chacabuco", "Puerto Chacabuco"),
+    ("Pto_Navarino", "Puerto Navarino"),
+    ("Pto_Williams", "Puerto Williams"),
+    ("Nvo_Pto_Bahia", "Nuevo Puerto De Bahía Catalina"),
+    ("Jose_S_Mardones", "Pto. José Santos Mardones"),
+    ("Pto_Natales", "Pto. De Puerto Natales")
+)
 
 #obtenido en https://github.com/witoi/django-cl/
 comunas = (
