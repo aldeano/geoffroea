@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.localflavor.cl.cl_regions import REGION_CHOICES
 from controles.comunas import comunas
+from django_countries import CountryField
 
 class TipoUsuario(models.Model):
 
@@ -147,8 +148,26 @@ class Pasajero(models.Model):
 	genero = models.CharField(choices=opciones_genero)
 	declara = models.Booleanfield()
 	proceso = models.Booleanfield()
-	pais_origen
+	pais_origen = CountryField()
 
+
+class Pasajero_terrestre(Pasajero):
+
+	ubicacion_intercepcion = models.CharField(choices=ubicacion("terrestre"))
+
+
+class Pasajero_maritimo(Pasajero):
+
+	ubicacion_intercepcion = models.CharField(choices=ubicacion("maritimo"))
+	ultimo_puerto = models.CharField(choices=puertos)
+	prox_puerto = models.CharField(choices=puertos)
+
+
+class Pasajero_aereo(Pasajero):
+
+	ubicacion_intercepcion = models.CharField(choices=ubicacion("aereo"))
+
+	
 class Intercepciones(models.Model):
 	
 	pasajero = models.ForeignKey("Pasajero")

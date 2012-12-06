@@ -42,6 +42,149 @@ medidas_destruccion = (
     ("otro", "Otro")
     )
 
+def ubicacion(tipo_control):
+'''Define la lista de opciones donde es encontrada una intercepción
+, le tiene que pasar el tipo de control - terrestre, marítimo o aéreo - 
+para definir la lista final '''
+    lista = [
+    ["equipaje", "Equipaje"],
+    ]
+    if tipo_control == "terrestre":
+        lista.append(["Pasajeros"], [
+            ["bicicleta", "Bicicleta"],
+            ["bus", "Bus"],
+            ["moto", "Motocicleta"],
+            ["tren", "Tren"],
+            ["veh_dipl", "Vehículo Diplomático"],
+            ["veh_part", "Vehículo Particular"],
+            ["veh_hum", "Vehículo con Tracción Humana"]
+            ],
+            ["Carga"], [
+            ["atingente", "Carga atingente a SAG"],
+            ["no_atingente", "Carga no atingente a SAG"]
+            ],
+            ["FFAA"], [
+            ["auto", "Auto"],
+            ["bus", "Bus"],
+            ["carga_atingente", "Carga atingente a SAG"],
+            ["carga_no_atingente", "Carga no atingente a SAG"]
+            ])
+    elif tipo_control == "aereo":
+        lista.append(["Pasajeros"], [
+            ["avion", "Avión"],
+            ["avioneta", "Avioneta"],
+            ["helicoptero", "Helicóptero"]
+            ],
+            ["Carga"], [
+            ["avion", "Avión"]
+            ],
+            ["FFAA"], [
+            ["avion_carga", "Avión de Carga"],
+            ["avion_pas", "Avión de Pasajeros"],
+            ["avioneta", "Avioneta"],
+            ["helicoptero", "Helicóptero"]
+            ])
+    else:
+        lista.append(["Pasajeros"], [
+            ["crucero", "Crucero"],
+            ["velero", "Velero"],
+            ],
+            ["Carga"], [
+            ["cisterna", "Barco Cisterna"],
+            ["contenedor", "Barco Contenedor"],
+            ["mercante", "Barco Mercante"]
+            ],
+            ["FFAA"], [
+            ["guerra", "Buque de Guerra"],
+            ["instruccion", "Buque de Instrucción"],
+            ["psj-carga", "Buque de Pasajeros-Carga"],
+            ["tanque", "Buque Tanque"]
+            ]) 
+    return lista
+
+'''
+Listado de puertos que tengo que modificar para hacerlos presentables
+<option value="2"   >PTO. DE ARICA</option>
+                                        
+<option value="9"   >PUERTO DE IQUIQUE</option>
+
+<option value="10"   >PUERTO DE PATACHE</option>
+
+<option value="11"   >PUERTO DE PATILLO</option>
+
+<option value="18"   >PUERTO DE MEJILLONES</option>
+
+<option value="14"   >CALETA COLOSO</option>
+
+<option value="19"   >PUERTO DE TOCOPILLA</option>
+
+<option value="16"   >PUERTO DE ANGAMOS</option>
+
+<option value="17"   >PUERTO DE ANTOFAGASTA</option>
+
+<option value="15"   >CALETA MICHILLA</option>
+
+<option value="27"   >PUERTO DE BARQUITO</option>
+
+<option value="100"   >PUERTO PUNTA TOTORALILLO</option>
+
+<option value="26"   >PUERTO DE CALDERA</option>
+
+<option value="30"   >PUERTO DE HUASCO</option>
+
+<option value="32"   >PUNTA DE CHUNGOS</option>
+
+<option value="34"   >PUERTO DE COQUIMBO</option>
+
+<option value="35"   >PUERTO DE GUAYACAN</option>
+
+<option value="38"   >PUERTO POLICARPO TORO</option>
+
+<option value="41"   >PUERTO DE QUINTERO</option>
+
+<option value="42"   >PUERTO DE VENTANAS</option>
+
+<option value="43"   >PUERTO DE SAN ANTONIO</option>
+
+<option value="97"   >PUERTO SAN JUAN BAUTISTA</option>
+
+<option value="44"   >PUERTO DE VALPARAISO</option>
+
+<option value="51"   >PUERTO DE PENCO</option>
+
+<option value="52"   >PUERTO DE SAN VICENTE</option>
+
+<option value="54"   >PUERTO MOLO 500</option>
+
+<option value="50"   >PUERTO DE LIRQUEN</option>
+
+<option value="49"   >PUERTO DE CORONEL</option>
+
+<option value="53"   >PUERTO DE TALCAHUANO</option>
+
+<option value="95"   >PUERTO DE ANCUD</option>
+
+<option value="59"   >PUERTO DE CASTRO</option>
+
+<option value="64"   >PTO. DE PUERTO MONTT</option>
+
+<option value="65"   >PUERTO DE SAN JOSÉ</option>
+
+<option value="67"   >PUERTO DE CORRAL</option>
+
+<option value="75"   >PUERTO CHACABUCO</option>
+
+<option value="77"   >PUERTO NAVARINO</option>
+
+<option value="96"   >PUERTO WILLIAMS</option>
+
+<option value="98"   >NUEVO PUERTO DE BAHÍA CATALINA</option>
+
+<option value="79"   >PTO. JOSÉ SANTOS MARDONES</option>
+
+<option value="83"   >PTO. DE PUERTO NATALES</option>
+'''
+
 #obtenido en https://github.com/witoi/django-cl/
 comunas = (
     # ('15', u'Región de Arica y Parinacota'),
