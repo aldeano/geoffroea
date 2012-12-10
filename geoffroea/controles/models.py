@@ -146,8 +146,8 @@ class Pasajero(models.Model):
 	n_doc = models.CharField(max_length=15,blank=False)
 	nombres_apellidos = models.CharField(max_length=40,blank=False)
 	genero = models.CharField(choices=opciones_genero)
-	declara = models.Booleanfield()
-	proceso = models.Booleanfield()
+	declara = models.BooleanField()
+	proceso = models.BooleanField()
 	pais_origen = CountryField()
 
 
@@ -168,10 +168,28 @@ class Pasajero_aereo(Pasajero):
 	ubicacion_intercepcion = models.CharField(choices=ubicacion("aereo"))
 
 	
-class Intercepciones(models.Model):
+class Productos_interceptados(models.Model):
 	
-	pasajero = models.ForeignKey("Pasajero")
+	rubro = models.CharField(choices=rubros)
+	estado = models.CharField(choices=estados)
+	cantidad = models.IntegerField()
+	kilos = models.FloatField()
+	rip = models.BooleanField()
+	kilos_rip = models.FloatField()
+	medida_int = models.CharField(choices=medidas_intercepcion)
+	comentario_int = models.TextField()
 
+class Intercepcion(Productos_interceptados):
+
+	pasajero = models.ForeignKey("Pasajero")
+	inspector = models.ForeignKey(User,blank=False)
+	probable_origen = CountryField()
+	
+
+
+class Abandono(Productos_interceptados):
+
+	dia = models.DateField()
 
 class Turno(models.Model):
 
@@ -201,7 +219,7 @@ class Acta_Destruccion(models.Model):
 	acta_retencion = models.ManyToManyField("Acta_Retencion")
 	resolucion = models.CharField(max_length=15)
 	prod_interceptado = models.ManyToManyField("Intercepciones")
-	desnaturalizacion = models.Booleanfield(blank=False)
+	desnaturalizacion = models.BooleanField(blank=False)
 	prod_desnaturalizacion = models.CharField(max_length=40)
 	medida_aplicada = models.CharField(choices=medidas_destruccion,blank=False)
 	observaciones = models.TextField()

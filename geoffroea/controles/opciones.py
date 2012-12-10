@@ -42,10 +42,13 @@ medidas_destruccion = (
     ("otro", "Otro")
     )
 
-def ubicacion(tipo_control):
-'''Define la lista de opciones donde es encontrada una intercepción
+def ubicacion(tipo_control,abandono=false):
+'''
+Define la lista de opciones donde es encontrada una intercepción
 , le tiene que pasar el tipo de control - terrestre, marítimo o aéreo - 
-para definir la lista final '''
+para definir la lista final. Ademas si resulta ser un abandono se
+agrega la opción de area ccff
+'''
     lista = [
     ["equipaje", "Equipaje"],
     ]
@@ -84,7 +87,7 @@ para definir la lista final '''
             ["avioneta", "Avioneta"],
             ["helicoptero", "Helicóptero"]
             ])
-    else:
+    elif tipo_control == "maritimo":
         lista.append(["Pasajeros"], [
             ["crucero", "Crucero"],
             ["velero", "Velero"],
@@ -99,11 +102,18 @@ para definir la lista final '''
             ["instruccion", "Buque de Instrucción"],
             ["psj-carga", "Buque de Pasajeros-Carga"],
             ["tanque", "Buque Tanque"]
-            ]) 
+            ])
+
+    if abandono == true:
+        lista = lista.append(
+            ["area_ccff", "Área Control Fronterizo"]
+            )
+
     return lista
 
 
 puertos = (
+    ("Fuera_Chile", "Fuera de Chile")
     ("Arica", "Puerto De Arica"),   
     ("Iquique", "Puerto De Iquique"),
     ("Patache", "Puerto De Patache"),
@@ -145,6 +155,26 @@ puertos = (
     ("Jose_S_Mardones", "Pto. José Santos Mardones"),
     ("Pto_Natales", "Pto. De Puerto Natales")
 )
+
+rubros = (
+    ("agricola", "Agrícola"),
+    ("pecuario", "Pecuario"),
+    ("cites", "Cites")
+    )
+
+estados = (
+    ("vivo", "Vivo"),
+    ("muerto", "Muerto"),
+    ("partes", "Partes")
+    )
+
+medidas_intercepcion = (
+    ("eliminacion", "Eliminación"),
+    ("fumigacion", "Fumigación"),
+    ("reexportacion", "Reexportación"),
+    ("retencion", "Retención"),
+    ("int_ampliada", "Intercepción Ampliada")
+    )
 
 #obtenido en https://github.com/witoi/django-cl/
 comunas = (
