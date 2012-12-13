@@ -149,25 +149,11 @@ class Pasajero(models.Model):
 	declara = models.BooleanField()
 	proceso = models.BooleanField()
 	pais_origen = CountryField()
-
-
-class Pasajero_terrestre(Pasajero):
-
-	ubicacion_intercepcion = models.CharField(choices=ubicacion("terrestre"))
-
-
-class Pasajero_maritimo(Pasajero):
-
-	ubicacion_intercepcion = models.CharField(choices=ubicacion("maritimo"))
+	ubicacion = models.CharField()
 	ultimo_puerto = models.CharField(choices=puertos)
 	prox_puerto = models.CharField(choices=puertos)
 
 
-class Pasajero_aereo(Pasajero):
-
-	ubicacion_intercepcion = models.CharField(choices=ubicacion("aereo"))
-
-	
 class Productos_interceptados(models.Model):
 	
 	rubro = models.CharField(choices=rubros)
@@ -182,14 +168,15 @@ class Productos_interceptados(models.Model):
 class Intercepcion(Productos_interceptados):
 
 	pasajero = models.ForeignKey("Pasajero")
-	inspector = models.ForeignKey(User,blank=False)
-	probable_origen = CountryField()
-	
 
 
 class Abandono(Productos_interceptados):
 
 	dia = models.DateField()
+	inspector = models.ForeignKey(User,blank=False)
+	probable_origen = CountryField()
+	ubicacion = models.CharField()
+
 
 class Turno(models.Model):
 
