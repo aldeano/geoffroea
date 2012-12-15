@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.localflavor.cl.cl_regions import REGION_CHOICES
-from controles.comunas import comunas
+from controles.opciones import *
 from django_countries import CountryField
 
 class TipoUsuario(models.Model):
@@ -40,53 +40,53 @@ class Dia(models.Model):
 	fecha = models.DateField()
 	inspector = models.OneToOneField(User)
 	#pasajeros
-	hombres_ingresados = models.IntegerField(max_digits=5)
-	hombres_inspeccionados = models.IntegerField(max_digits=5)
-	mujeres_ingresadas = models.IntegerField(max_digits=5)
-	mujeres_inspeccionadas = models.IntegerField(max_digits=5)
-	declaran_no_si_traen = models.IntegerField(max_digits=5)
-	declaran_si_si_traen = models.IntegerField(max_digits=5)
-	declaran_no_no_traen = models.IntegerField(max_digits=5)
-	n_declaran = models.IntegerField(max_digits=5)
-	n_adc = models.IntegerField(max_digits=2)
+	hombres_ingresados = models.IntegerField()
+	hombres_inspeccionados = models.IntegerField()
+	mujeres_ingresadas = models.IntegerField()
+	mujeres_inspeccionadas = models.IntegerField()
+	declaran_no_si_traen = models.IntegerField()
+	declaran_si_si_traen = models.IntegerField()
+	declaran_no_no_traen = models.IntegerField()
+	n_declaran = models.IntegerField()
+	n_adc = models.IntegerField()
 	#cites
-	cites_entrada_flora = models.IntegerField(max_digits=2)
-	cites_entrada_fauna = models.IntegerField(max_digits=2)
-	cites_salida_flora = models.IntegerField(max_digits=2)
-	cites_salida_fauna = models.IntegerField(max_digits=2)
+	cites_entrada_flora = models.IntegerField()
+	cites_entrada_fauna = models.IntegerField()
+	cites_salida_flora = models.IntegerField()
+	cites_salida_fauna = models.IntegerField()
 
 
-class Dia_CCFF_Terrestre(Dia)
+class Dia_CCFF_Terrestre(Dia):
 
 	#medios de transporte
-	bicicletas_ingresadas = models.IntegerField(max_digits=3)
-	bicicletas_inspeccionadas = models.IntegerField(max_digits=3)
-	vehiculo_part_ingresado = models.IntegerField(max_digits=3)
-	vehiculo_part_inspeccionado = models.IntegerField(max_digits=3)
-	moto_ingresada = models.IntegerField(max_digits=3)
-	moto_inspeccionada = models.IntegerField(max_digits=3)
-	bus_ingresado = models.IntegerField(max_digits=3)
-	bus_inspeccionado = models.IntegerField(max_digits=3)
-	tren_pas_ingresado = models.IntegerField(max_digits=3)
-	tren_pas_inspeccionado = models.IntegerField(max_digits=3)
-	vehiculo_dipl_ingresado = models.IntegerField(max_digits=3)
-	vehiculo_dipl_inspeccionado = models.IntegerField(max_digits=3)
-	vehiculo_hum_ingresado = models.IntegerField(max_digits=3)
-	vehiculo_hum_inspeccionado = models.IntegerField(max_digits=3)
-	camion_atingente_ingresado = models.IntegerField(max_digits=3)
-	camion_atingente_inspeccionado = models.IntegerField(max_digits=3)
-	camion_no_atingente_ingresado = models.IntegerField(max_digits=3)
-	camion_no_atingente_inspeccionado = models.IntegerField(max_digits=3)
-	tren_carga_ingresado = models.IntegerField(max_digits=3)
-	tren_carga_inspeccionado = models.IntegerField(max_digits=3)
-	camion_ffaa_at_ingresado = models.IntegerField(max_digits=3)
-	camion_ffaa_at_inspeccionado = models.IntegerField(max_digits=3)
-	camion_ffaa_no_at_ingresado = models.IntegerField(max_digits=3)
-	camion_ffaa_no_at_inspeccionado = models.IntegerField(max_digits=3)
-	auto_ffaa_ingresado = models.IntegerField(max_digits=3)
-	auto_ffaa_inspeccionado = models.IntegerField(max_digits=3)
-	bus_ffaa_ingresado = models.IntegerField(max_digits=3)
-	bus_ffaa_inspeccionado = models.IntegerField(max_digits=3)
+	bicicletas_ingresadas = models.IntegerField()
+	bicicletas_inspeccionadas = models.IntegerField()
+	vehiculo_part_ingresado = models.IntegerField()
+	vehiculo_part_inspeccionado = models.IntegerField()
+	moto_ingresada = models.IntegerField()
+	moto_inspeccionada = models.IntegerField()
+	bus_ingresado = models.IntegerField()
+	bus_inspeccionado = models.IntegerField()
+	tren_pas_ingresado = models.IntegerField()
+	tren_pas_inspeccionado = models.IntegerField()
+	vehiculo_dipl_ingresado = models.IntegerField()
+	vehiculo_dipl_inspeccionado = models.IntegerField()
+	vehiculo_hum_ingresado = models.IntegerField()
+	vehiculo_hum_inspeccionado = models.IntegerField()
+	camion_atingente_ingresado = models.IntegerField()
+	camion_atingente_inspeccionado = models.IntegerField()
+	camion_no_atingente_ingresado = models.IntegerField()
+	camion_no_atingente_inspeccionado = models.IntegerField()
+	tren_carga_ingresado = models.IntegerField()
+	tren_carga_inspeccionado = models.IntegerField()
+	camion_ffaa_at_ingresado = models.IntegerField()
+	camion_ffaa_at_inspeccionado = models.IntegerField()
+	camion_ffaa_no_at_ingresado = models.IntegerField()
+	camion_ffaa_no_at_inspeccionado = models.IntegerField()
+	auto_ffaa_ingresado = models.IntegerField()
+	auto_ffaa_inspeccionado = models.IntegerField()
+	bus_ffaa_ingresado = models.IntegerField()
+	bus_ffaa_inspeccionado = models.IntegerField()
 
 	def __unicode__(self):
 		return self.fecha
@@ -94,45 +94,45 @@ class Dia_CCFF_Terrestre(Dia)
 
 class Dia_CCFF_Maritimo(Dia):
 
-	crucero_ingresado = models.IntegerField(max_digits=3)
-	crucero_inspeccionado = models.IntegerField(max_digits=3)
-	mercante_ingresado = models.IntegerField(max_digits=3)
-	mercante_inspeccionado = models.IntegerField(max_digits=3)
-	contenedor_ingresado = models.IntegerField(max_digits=3)
-	contenedor_inspeccionado = models.IntegerField(max_digits=3)
-	cisterna_ingresado = models.IntegerField(max_digits=3)
-	cisterna_inspeccionado = models.IntegerField(max_digits=3)
-	tanque_ffaa_ingresado = models.IntegerField(max_digits=3)
-	tanque_ffaa_inspeccionado = models.IntegerField(max_digits=3)
-	instruccion_ffaa_ingresado = models.IntegerField(max_digits=3)
-	instruccion_ffaa_inspeccionado = models.IntegerField(max_digits=3)
-	guerra_ffaa_ingresado = models.IntegerField(max_digits=3)
-	guerra_ffaa_inspeccionado = models.IntegerField(max_digits=3)
-	pas_carga_ffaa_ingresado = models.IntegerField(max_digits=3)
-	pas_carga_ffaa_inspeccionado = models.IntegerField(max_digits=3)
+	crucero_ingresado = models.IntegerField()
+	crucero_inspeccionado = models.IntegerField()
+	mercante_ingresado = models.IntegerField()
+	mercante_inspeccionado = models.IntegerField()
+	contenedor_ingresado = models.IntegerField()
+	contenedor_inspeccionado = models.IntegerField()
+	cisterna_ingresado = models.IntegerField()
+	cisterna_inspeccionado = models.IntegerField()
+	tanque_ffaa_ingresado = models.IntegerField()
+	tanque_ffaa_inspeccionado = models.IntegerField()
+	instruccion_ffaa_ingresado = models.IntegerField()
+	instruccion_ffaa_inspeccionado = models.IntegerField()
+	guerra_ffaa_ingresado = models.IntegerField()
+	guerra_ffaa_inspeccionado = models.IntegerField()
+	pas_carga_ffaa_ingresado = models.IntegerField()
+	pas_carga_ffaa_inspeccionado = models.IntegerField()
 
 	def __unicode__(self):
 		return self.fecha
 
 
-class Dia_CCFF_Aereo(dia):
+class Dia_CCFF_Aereo(Dia):
 
-	avioneta_ingresada = models.IntegerField(max_digits=3)
-	avioneta_inspeccionada = models.IntegerField(max_digits=3)
-	avion_ingresado = models.IntegerField(max_digits=3)
-	avion_inspeccionado = models.IntegerField(max_digits=3)
-	heli_ingresado = models.IntegerField(max_digits=3)
-	heli_inspeccionado = models.IntegerField(max_digits=3)
-	avion_carga_ingresado = models.IntegerField(max_digits=3)
-	avion_carga_inspeccionado = models.IntegerField(max_digits=3)
-	avion_carga_ffaa_ingresado = models.IntegerField(max_digits=3)
-	avion_carga_ffaa_inspeccionado = models.IntegerField(max_digits=3)
-	avion_pas_ffaa_ingresado = models.IntegerField(max_digits=3)
-	avion_pas_ffaa_inspeccionado = models.IntegerField(max_digits=3)
-	avioneta_ffaa_ingresada = models.IntegerField(max_digits=3)
-	avioneta_ffaa_inspeccionada = models.IntegerField(max_digits=3)
-	heli_ffaa_ingresado = models.IntegerField(max_digits=3)
-	heli_ffaa_inspeccionado = models.IntegerField(max_digits=3)
+	avioneta_ingresada = models.IntegerField()
+	avioneta_inspeccionada = models.IntegerField()
+	avion_ingresado = models.IntegerField()
+	avion_inspeccionado = models.IntegerField()
+	heli_ingresado = models.IntegerField()
+	heli_inspeccionado = models.IntegerField()
+	avion_carga_ingresado = models.IntegerField()
+	avion_carga_inspeccionado = models.IntegerField()
+	avion_carga_ffaa_ingresado = models.IntegerField()
+	avion_carga_ffaa_inspeccionado = models.IntegerField()
+	avion_pas_ffaa_ingresado = models.IntegerField()
+	avion_pas_ffaa_inspeccionado = models.IntegerField()
+	avioneta_ffaa_ingresada = models.IntegerField()
+	avioneta_ffaa_inspeccionada = models.IntegerField()
+	heli_ffaa_ingresado = models.IntegerField()
+	heli_ffaa_inspeccionado = models.IntegerField()
 
 	def __unicode__(self):
 		return self.fecha
@@ -142,28 +142,29 @@ class Pasajero(models.Model):
 
 	fecha = models.DateField(blank=False)
 	inspector = models.ForeignKey(User,blank=False)
-	tipo_doc = models.CharField(choices=tipos_documentos,blank=False)
+	tipo_doc = models.CharField(max_length=19,choices=tipos_documentos,blank=False)
 	n_doc = models.CharField(max_length=15,blank=False)
 	nombres_apellidos = models.CharField(max_length=40,blank=False)
-	genero = models.CharField(choices=opciones_genero)
+	genero = models.CharField(max_length=9,choices=opciones_genero)
 	declara = models.BooleanField()
 	proceso = models.BooleanField()
 	pais_origen = CountryField()
-	ubicacion = models.CharField()
-	ultimo_puerto = models.CharField(choices=puertos)
-	prox_puerto = models.CharField(choices=puertos)
+	ubicacion = models.CharField(max_length=28)
+	ultimo_puerto = models.CharField(max_length=30,choices=puertos)
+	prox_puerto = models.CharField(max_length=30,choices=puertos)
 
 
 class Productos_interceptados(models.Model):
 	
-	rubro = models.CharField(choices=rubros)
-	estado = models.CharField(choices=estados)
+	rubro = models.CharField(max_length=8,choices=rubros)
+	estado = models.CharField(max_length=6,choices=estados)
 	cantidad = models.IntegerField()
 	kilos = models.FloatField()
 	rip = models.BooleanField()
 	kilos_rip = models.FloatField()
-	medida_int = models.CharField(choices=medidas_intercepcion)
+	medida_int = models.CharField(max_length=21,choices=medidas_intercepcion)
 	comentario_int = models.TextField()
+
 
 class Intercepcion(Productos_interceptados):
 
@@ -175,9 +176,9 @@ class Abandono(Productos_interceptados):
 	dia = models.DateField()
 	inspector = models.ForeignKey(User,blank=False)
 	probable_origen = CountryField()
-	ubicacion = models.CharField()
+	ubicacion = models.CharField(max_length=28)
 
-
+'''
 class Turno(models.Model):
 
 	inicio = models.DateField()
@@ -220,3 +221,4 @@ class Acta_Intercepcion(models.Model):
 	fecha = models.DateField(blank=False)
 	oficina_sag = models.CharField(max_length=30,blank=False)
 	nombres_apellidos =
+'''

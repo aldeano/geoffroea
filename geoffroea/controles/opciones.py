@@ -41,14 +41,14 @@ medidas_destruccion = (
     ("enterramiento", "Enterramiento"),
     ("otro", "Otro")
     )
-
-def ubicacion(tipo_control,abandono=false):
 '''
+def ubicacion(tipo_control,abandono=false):
+
 Define la lista de opciones donde es encontrada una intercepción
 , le tiene que pasar el tipo de control - terrestre, marítimo o aéreo - 
 para definir la lista final. Ademas si resulta ser un abandono se
 agrega la opción de area ccff
-'''
+
     lista = [
     ["equipaje", "Equipaje"],
     ]
@@ -110,10 +110,10 @@ agrega la opción de area ccff
             )
 
     return lista
-
+'''
 
 puertos = (
-    ("Fuera_Chile", "Fuera de Chile")
+    ("Fuera_Chile", "Fuera de Chile"),
     ("Arica", "Puerto De Arica"),   
     ("Iquique", "Puerto De Iquique"),
     ("Patache", "Puerto De Patache"),
