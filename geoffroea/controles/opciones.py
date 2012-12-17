@@ -183,6 +183,14 @@ areas_no_inspeccionadas = (
     ("cubierta", "Cubierta")
     )
 
+tipos_vuelo = (
+    ("pasajeros", "Pasajeros"),
+    ("carga", "Carga"),
+    ("mixto", "Mixto"),
+    ("transito", "Tránsito"),
+    ("militar", "Militar")
+    )
+
 #obtenido en https://github.com/witoi/django-cl/
 comunas = (
     # ('15', u'Región de Arica y Parinacota'),

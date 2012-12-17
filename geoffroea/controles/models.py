@@ -207,11 +207,30 @@ class Acta_PostRecepcion(Acta_Nave):
 
 	def __unicode__(self):
 		return self.numero
+
+
 class Desembarco_Barco(models.Model):
 
 	fecha = models.DateTimeField()
 
+class Acta_Aeronave(models.Model):
 
+	numero = models.IntegerField()
+	compania_aerea= models.CharField(max_length=30)
+	vuelo = models.CharField(max_length=10)
+	matricula = models.CharField(max_length=10)
+	origen = models.CharField(max_length=20)
+	ruta = models.CharField(max_length=50)
+	fecha = models.DateField()
+	hora_estimada = models.TimeField()
+	tipo_vuelo = models.CharField(choices=tipos_vuelo)
+	observaciones = models.TextField()
+
+
+class Acta_Inspeccion(Acta_Aeronave):
+
+	nombre_aeropuerto = models.CharField(max_length=30)
+		
 class Prod_Regulado(models.Model):
 
 	producto = models.CharField()
