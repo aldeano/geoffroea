@@ -176,6 +176,13 @@ medidas_intercepcion = (
     ("int_ampliada", "Intercepción Ampliada")
     )
 
+areas_no_inspeccionadas = (
+    ("camarotes", "Camarotes"),
+    ("despensa", "Despensa"),
+    ("dry_stores", "Dry Stores"),
+    ("cubierta", "Cubierta")
+    )
+
 #obtenido en https://github.com/witoi/django-cl/
 comunas = (
     # ('15', u'Región de Arica y Parinacota'),

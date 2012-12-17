@@ -30,7 +30,10 @@ class ControlesFronterizos(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
+	class Meta:
+		verbose_name_plural = "Controles Fronterizos"
 
+		
 class Dia(models.Model):
 	'''
 	Modelo base para los 3 tipos de controles, contiene sólo los campos necesarios
@@ -59,6 +62,7 @@ class Dia(models.Model):
 class Dia_CCFF_Terrestre(Dia):
 
 	#medios de transporte
+	control_fronterizo = models.ForeignKey(ControlesFronterizos)
 	bicicletas_ingresadas = models.IntegerField()
 	bicicletas_inspeccionadas = models.IntegerField()
 	vehiculo_part_ingresado = models.IntegerField()
@@ -94,6 +98,7 @@ class Dia_CCFF_Terrestre(Dia):
 
 class Dia_CCFF_Maritimo(Dia):
 
+	control_fronterizo = models.ForeignKey(ControlesFronterizos)
 	crucero_ingresado = models.IntegerField()
 	crucero_inspeccionado = models.IntegerField()
 	mercante_ingresado = models.IntegerField()
@@ -110,13 +115,18 @@ class Dia_CCFF_Maritimo(Dia):
 	guerra_ffaa_inspeccionado = models.IntegerField()
 	pas_carga_ffaa_ingresado = models.IntegerField()
 	pas_carga_ffaa_inspeccionado = models.IntegerField()
-
+	aviso_recalada_inicio = models.IntegerField()
+	aviso_recalada_termino = models.IntegerField()
+	acta_recepcion = models.ForeignKey(Actas_Recepcion)
+	post_recepcion = models.ForeignKey(Actas_Post_Recepcion)
+	
 	def __unicode__(self):
 		return self.fecha
 
 
 class Dia_CCFF_Aereo(Dia):
 
+	control_fronterizo = models.ForeignKey(ControlesFronterizos)
 	avioneta_ingresada = models.IntegerField()
 	avioneta_inspeccionada = models.IntegerField()
 	avion_ingresado = models.IntegerField()
@@ -133,9 +143,83 @@ class Dia_CCFF_Aereo(Dia):
 	avioneta_ffaa_inspeccionada = models.IntegerField()
 	heli_ffaa_ingresado = models.IntegerField()
 	heli_ffaa_inspeccionado = models.IntegerField()
+	solicitud_inspeccion = models.ForeignKey(Sol_Inspeccion)
+	acta_inspeccion = models.ForeignKey(Actas_Inspeccion)
 
 	def __unicode__(self):
 		return self.fecha
+
+
+class Acta_Nave(models.Model)
+
+	numero = models.IntegerField()
+	puerto_inspeccion = models.CharField(max_length=30,choices=puertos)
+	nombre_nave = models.CharField(max_length=30)
+	agencia = models.CharField(max_length=20)
+	puerto_anterior = models.CharField(max_length=20)
+	puerto_siguiente = models.CharField(max_length=20)
+	arribo = models.DateTimeField()
+	recepcion = models.DateTimeField()
+	zarpe = models.DateTimeField()
+	mujeres_desembarcan = models.IntegerField()
+	hombres_desembarcan = models.IntegerField()
+	desembarcos = models.ForeignKey(Desembarco_Barco)
+	numero_sellos = models.IntegerField()
+	ubicacion_sellos = models.CharField(max_length=50)
+	sitio_atraque = models.CharField(max_length=20)
+	puerto_c_limantria = models.CharField(max_length=20)
+	solicitan_antecedentes = models.BooleanField()
+	observaciones = models.TextField()
+	basuras_tapadas = models.BooleanField()
+	basuras_fijas = models.BooleanField()
+	basuras_hermeticas = models.BooleanField()
+	deficiencia_corregida = models.BooleanField()
+	area_no_inspeccionada = models.CharField(max_length=10,choices=areas_no_inspeccionadas)
+	animal_a_bordo = models.BooleanField()
+	tipo_animal = models.CharField(max_length=20)
+	numero_animal = models.IntegerField()
+	productos_regulados = models.ManyToManyField(prod_regulados)
+
+
+class Acta_Recepcion(Acta_Nave)
+
+	pasajeros_ingresan = models.IntegerField()
+	descensos = models.IntegerField()
+	revision_listado_puertos = models.BooleanField()
+	periodo_revision = models.CharField(max_length=15)
+	cert_fitosanitario = models.BooleanField()
+
+	def __unicode__(self):
+		return self.numero
+
+
+class Acta_PostRecepcion(Acta_Nave):
+
+	monitoreo = models.BooleanField()
+	prod_sellados_recepcion = models.BooleanField()
+	mantiene_sellos = models.BooleanField()
+	sellos_rotos = models.TextField()
+	desembarco_basuras = models.BooleanField()
+	transbordo_basuras = models.BooleanField()
+	supervision_sag = models.BooleanField()
+	adc = models.BooleanField()
+	motivo_adc = models.TextField()
+
+	def __unicode__(self):
+		return self.numero
+class Desembarco_Barco(models.Model):
+
+	fecha = models.DateTimeField()
+
+
+class Prod_Regulado(models.Model):
+
+	producto = models.CharField()
+	kilogramos = models.DecimalField(max_digits=5,decimal_places=2)
+	pais_origen = CountryField()
+	medida_adoptada = models.CharField(max_length=20)
+	numero_muestra = models.IntegerField()
+	unidad_muestra = models.CharField(max_length=10)
 
 
 class Pasajero(models.Model):
@@ -183,6 +267,7 @@ class Turno(models.Model):
 
 	inicio = models.DateField()
 	fin = models.DateField()
+	hora_fin = models.TimeField()
 	cores = models.CharField()
 	quemas = models.ManyToManyField(Quema)
 
