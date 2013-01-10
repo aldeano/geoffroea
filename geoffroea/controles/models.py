@@ -233,7 +233,7 @@ class Acta_Inspeccion(Acta_Aeronave):
 		
 class Prod_Regulado(models.Model):
 
-	producto = models.CharField()
+	producto = models.CharField(max_digits=30)
 	kilogramos = models.DecimalField(max_digits=5,decimal_places=2)
 	pais_origen = CountryField()
 	medida_adoptada = models.CharField(max_length=20)
@@ -259,12 +259,11 @@ class Pasajero(models.Model):
 
 class Productos_interceptados(models.Model):
 	
-	rubro = models.CharField(max_length=8,choices=rubros)
+	intercepcion = models.ForeignKey(Prod_Interceptable)
 	estado = models.CharField(max_length=6,choices=estados)
 	cantidad = models.IntegerField()
 	kilos = models.FloatField()
-	rip = models.BooleanField()
-	kilos_rip = models.FloatField()
+	rip = models.OneToOneField(Record_Intercepcion)
 	medida_int = models.CharField(max_length=21,choices=medidas_intercepcion)
 	comentario_int = models.TextField()
 
@@ -280,6 +279,20 @@ class Abandono(Productos_interceptados):
 	inspector = models.ForeignKey(User,blank=False)
 	probable_origen = CountryField()
 	ubicacion = models.CharField(max_length=28)
+
+
+class Prod_Interceptable(models.Model):
+
+	categoria = models.CharField()
+	subtipo = models.CharField()
+	tipo = models.CharField()
+
+
+class Record_Intercepcion(models.Model):
+
+	kilos = models.FloatField()
+	folio_protocolo = models.IntegerField()
+
 
 '''
 class Turno(models.Model):

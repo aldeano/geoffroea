@@ -156,12 +156,6 @@ puertos = (
     ("Pto_Natales", "Pto. De Puerto Natales")
 )
 
-rubros = (
-    ("agricola", "Agrícola"),
-    ("pecuario", "Pecuario"),
-    ("cites", "Cites")
-    )
-
 estados = (
     ("vivo", "Vivo"),
     ("muerto", "Muerto"),
