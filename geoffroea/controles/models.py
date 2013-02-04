@@ -230,7 +230,8 @@ class Acta_Aeronave(models.Model):
 class Acta_Inspeccion(Acta_Aeronave):
 
 	nombre_aeropuerto = models.CharField(max_length=30)
-		
+
+
 class Prod_Regulado(models.Model):
 
 	producto = models.CharField(max_digits=30)
@@ -294,48 +295,83 @@ class Record_Intercepcion(models.Model):
 	folio_protocolo = models.IntegerField()
 
 
-'''
+class Orden_Tratamiento(models.Model):
+
+	numero = models.IntegerField()
+	fecha = models.DateField()
+
+
+class Cores(models.Model):
+
+	numero = models.IntegerField()
+	fecha = models.DateField()
+
+
 class Turno(models.Model):
 
-	inicio = models.DateField()
-	fin = models.DateField()
-	hora_fin = models.TimeField()
-	cores = models.CharField()
-	quemas = models.ManyToManyField(Quema)
-
-
-class Quema(models.Model):
-
-	dia = models.DateField()
-	rdi = models.ManyToManyField(Dia)
-	control = models.ManyToManyField(ControlesFronterizos)
-
-
-class Acta_Destruccion(models.Model):
-
-	numero = models.IntegerField(unique=True,blank=False)
-	region = models.IntegerField(blank=False)
-	codigo_ccff = models.CharField(max_length=8,blank=False)
-	fecha = models.DateField(blank=False)
-	oficina_sag = models.CharField(max_length=30,blank=False)
-	nombre_ccff = models.CharField(max_length=30,blank=False)
-	tipo_transporte = models.CharField(choices=tipo_transporte,blank=False)
-	acta_intercepcion = models.ManyToManyField("Acta_Intercepcion")
-	acta_retencion = models.ManyToManyField("Acta_Retencion")
-	resolucion = models.CharField(max_length=15)
-	prod_interceptado = models.ManyToManyField("Intercepciones")
-	desnaturalizacion = models.BooleanField(blank=False)
-	prod_desnaturalizacion = models.CharField(max_length=40)
-	medida_aplicada = models.CharField(choices=medidas_destruccion,blank=False)
-	observaciones = models.TextField()
+	jefe_turno = models.ForeignKey(TipoUsuario)
+	sgte_jefe_turno = models.ForeignKey(TipoUsuario)
+	dia_entrega = models.DateTimeField()
+	llenado_furi = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_llenado = models.CharField(max_length=80)
+	deteccion_prod_no_conf = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_deteccion = models.CharField(max_length=80)
+	intercepcion_ampliada  = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_intercepcion = models.CharField(max_length=80)
+	proc_administrativo = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_proc_admin = models.CharField(max_length=80)
+	funcionamiento_rx = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_func_rx = models.CharField(max_length=80)
+	funcionamiento_canina = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_func_canina = models.CharField(max_length=80)
+	funcionamiento_incin = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_func_incin = models.CharField(max_length=80)
+	envio_reclamos = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_reclamos = models.CharField(max_length=80)
+	prod_no_eliminados = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_no_eliminados = models.CharField(max_length=80)
+	recepcion_correos = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_recepcion = models.CharField(max_length=80)
+	envios_adc = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_adc = models.CharField(max_length=80)
+	envio_cites = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_cites = models.CharField(max_length=80)
+	envio_ac_incidentes = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_incidentes = models.CharField(max_length=80)
+	deteccion_ingreso = models.CharField(max_length=3,choices=opciones_llenado)
+	obs_ingreso = models.CharField(max_length=80)
+	inspectores = models.ManyToManyField(TipoUsuario)
 
 
 class Acta_Intercepcion(models.Model):
 	
 	numero = models.IntegerField(unique=True,blank=False)
-	region = models.IntegerField(blank=False)
-	codigo_ccff = models.CharField(max_length=8,blank=False)
-	fecha = models.DateField(blank=False)
-	oficina_sag = models.CharField(max_length=30,blank=False)
-	nombres_apellidos =
-'''
+	intercepcion = models.ForeignKey(Intercepcion)
+	inspector = models.ForeignKey(TipoUsuario)
+	firma = models.BooleanField()
+
+
+class Acta_Destruccion(models.Model):
+
+	numero = models.IntegerField(unique=True,blank=False)
+	intercepcion = models.ForeignKey(Intercepcion)
+	inspector = models.ForeignKey(TipoUsuario)
+	firma = models.BooleanField()
+	acta_intercepcion = models.ForeignKey(Acta_Intercepcion)
+	acta_retencion = models.ForeignKey(Acta_Retencion)
+	resolucion = models.CharField(max_length=15)
+	desnaturalizacion = models.BooleanField()
+	prod_desnaturalizacion = models.CharField(max_length=15)
+	observaciones = models.TextField()
+
+
+class Acta_Retencion(models.Model):
+
+	numero = models.IntegerField(unique=True,blank=False)
+	intercepcion = models.ForeignKey(Intercepcion)
+	motivo = models.CharField(max_length=50)
+	desde = models.DateField()
+	hasta = models.DateField()
+	lugar = models.CharField(max_length=50)
+	tipo_envase = models.CharField(max_length=50)
+	observaciones = models.TextField()

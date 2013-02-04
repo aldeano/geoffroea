@@ -41,6 +41,13 @@ medidas_destruccion = (
     ("enterramiento", "Enterramiento"),
     ("otro", "Otro")
     )
+
+opciones_llenado = (
+    ("si", "Si"),
+    ("no", "No"),
+    ("n/a", "No Aplica")
+    )
+
 '''
 def ubicacion(tipo_control,abandono=false):
 
