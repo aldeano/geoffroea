@@ -58,6 +58,9 @@ class Dia(models.Model):
 	cites_salida_flora = models.IntegerField()
 	cites_salida_fauna = models.IntegerField()
 
+	class Meta:
+		abstract = True
+
 
 class Dia_CCFF_Terrestre(Dia):
 
@@ -96,61 +99,25 @@ class Dia_CCFF_Terrestre(Dia):
 		return self.fecha
 
 
-class Dia_CCFF_Maritimo(Dia):
+class Prod_Regulado(models.Model):
 
-	control_fronterizo = models.ForeignKey(ControlesFronterizos)
-	crucero_ingresado = models.IntegerField()
-	crucero_inspeccionado = models.IntegerField()
-	mercante_ingresado = models.IntegerField()
-	mercante_inspeccionado = models.IntegerField()
-	contenedor_ingresado = models.IntegerField()
-	contenedor_inspeccionado = models.IntegerField()
-	cisterna_ingresado = models.IntegerField()
-	cisterna_inspeccionado = models.IntegerField()
-	tanque_ffaa_ingresado = models.IntegerField()
-	tanque_ffaa_inspeccionado = models.IntegerField()
-	instruccion_ffaa_ingresado = models.IntegerField()
-	instruccion_ffaa_inspeccionado = models.IntegerField()
-	guerra_ffaa_ingresado = models.IntegerField()
-	guerra_ffaa_inspeccionado = models.IntegerField()
-	pas_carga_ffaa_ingresado = models.IntegerField()
-	pas_carga_ffaa_inspeccionado = models.IntegerField()
-	aviso_recalada_inicio = models.IntegerField()
-	aviso_recalada_termino = models.IntegerField()
-	acta_recepcion = models.ForeignKey(Actas_Recepcion)
-	post_recepcion = models.ForeignKey(Actas_Post_Recepcion)
-	
-	def __unicode__(self):
-		return self.fecha
-
-
-class Dia_CCFF_Aereo(Dia):
-
-	control_fronterizo = models.ForeignKey(ControlesFronterizos)
-	avioneta_ingresada = models.IntegerField()
-	avioneta_inspeccionada = models.IntegerField()
-	avion_ingresado = models.IntegerField()
-	avion_inspeccionado = models.IntegerField()
-	heli_ingresado = models.IntegerField()
-	heli_inspeccionado = models.IntegerField()
-	avion_carga_ingresado = models.IntegerField()
-	avion_carga_inspeccionado = models.IntegerField()
-	avion_carga_ffaa_ingresado = models.IntegerField()
-	avion_carga_ffaa_inspeccionado = models.IntegerField()
-	avion_pas_ffaa_ingresado = models.IntegerField()
-	avion_pas_ffaa_inspeccionado = models.IntegerField()
-	avioneta_ffaa_ingresada = models.IntegerField()
-	avioneta_ffaa_inspeccionada = models.IntegerField()
-	heli_ffaa_ingresado = models.IntegerField()
-	heli_ffaa_inspeccionado = models.IntegerField()
-	solicitud_inspeccion = models.ForeignKey(Sol_Inspeccion)
-	acta_inspeccion = models.ForeignKey(Actas_Inspeccion)
+	producto = models.CharField(max_length=30)
+	kilogramos = models.DecimalField(max_digits=5,decimal_places=2)
+	pais_origen = CountryField()
+	medida_adoptada = models.CharField(max_length=20)
+	numero_muestra = models.IntegerField()
+	unidad_muestra = models.CharField(max_length=10)
 
 	def __unicode__(self):
-		return self.fecha
+		return self.producto
 
 
-class Acta_Nave(models.Model)
+class Desembarco_Barco(models.Model):
+
+	fecha = models.DateTimeField()
+
+
+class Acta_Nave(models.Model):
 
 	numero = models.IntegerField()
 	puerto_inspeccion = models.CharField(max_length=30,choices=puertos)
@@ -178,10 +145,13 @@ class Acta_Nave(models.Model)
 	animal_a_bordo = models.BooleanField()
 	tipo_animal = models.CharField(max_length=20)
 	numero_animal = models.IntegerField()
-	productos_regulados = models.ManyToManyField(prod_regulados)
+	productos_regulados = models.ManyToManyField(Prod_Regulado)
+
+	class Meta:
+		abstract = True
 
 
-class Acta_Recepcion(Acta_Nave)
+class Acta_Recepcion(Acta_Nave):
 
 	pasajeros_ingresan = models.IntegerField()
 	descensos = models.IntegerField()
@@ -209,9 +179,33 @@ class Acta_PostRecepcion(Acta_Nave):
 		return self.numero
 
 
-class Desembarco_Barco(models.Model):
+class Dia_CCFF_Maritimo(Dia):
 
-	fecha = models.DateTimeField()
+	control_fronterizo = models.ForeignKey(ControlesFronterizos)
+	crucero_ingresado = models.IntegerField()
+	crucero_inspeccionado = models.IntegerField()
+	mercante_ingresado = models.IntegerField()
+	mercante_inspeccionado = models.IntegerField()
+	contenedor_ingresado = models.IntegerField()
+	contenedor_inspeccionado = models.IntegerField()
+	cisterna_ingresado = models.IntegerField()
+	cisterna_inspeccionado = models.IntegerField()
+	tanque_ffaa_ingresado = models.IntegerField()
+	tanque_ffaa_inspeccionado = models.IntegerField()
+	instruccion_ffaa_ingresado = models.IntegerField()
+	instruccion_ffaa_inspeccionado = models.IntegerField()
+	guerra_ffaa_ingresado = models.IntegerField()
+	guerra_ffaa_inspeccionado = models.IntegerField()
+	pas_carga_ffaa_ingresado = models.IntegerField()
+	pas_carga_ffaa_inspeccionado = models.IntegerField()
+	aviso_recalada_inicio = models.IntegerField()
+	aviso_recalada_termino = models.IntegerField()
+	acta_recepcion = models.ForeignKey(Acta_Recepcion)
+	post_recepcion = models.ForeignKey(Acta_PostRecepcion)
+	
+	def __unicode__(self):
+		return self.fecha
+
 
 class Acta_Aeronave(models.Model):
 
@@ -223,23 +217,57 @@ class Acta_Aeronave(models.Model):
 	ruta = models.CharField(max_length=50)
 	fecha = models.DateField()
 	hora_estimada = models.TimeField()
-	tipo_vuelo = models.CharField(choices=tipos_vuelo)
+	tipo_vuelo = models.CharField(choices=tipos_vuelo,max_length=9)
 	observaciones = models.TextField()
+
+	def __unicode__(self):
+		return self.numero
+
+	class Meta:
+		abstract = True
 
 
 class Acta_Inspeccion(Acta_Aeronave):
 
 	nombre_aeropuerto = models.CharField(max_length=30)
 
+	def __unicode__(self):
+		return self.numero
 
-class Prod_Regulado(models.Model):
 
-	producto = models.CharField(max_digits=30)
-	kilogramos = models.DecimalField(max_digits=5,decimal_places=2)
-	pais_origen = CountryField()
-	medida_adoptada = models.CharField(max_length=20)
-	numero_muestra = models.IntegerField()
-	unidad_muestra = models.CharField(max_length=10)
+class Sol_Inspeccion(Acta_Aeronave):
+
+	escala_uno = models.CharField(max_length=30)
+	escala_dos = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.numero
+
+
+class Dia_CCFF_Aereo(Dia):
+
+	control_fronterizo = models.ForeignKey(ControlesFronterizos)
+	avioneta_ingresada = models.IntegerField()
+	avioneta_inspeccionada = models.IntegerField()
+	avion_ingresado = models.IntegerField()
+	avion_inspeccionado = models.IntegerField()
+	heli_ingresado = models.IntegerField()
+	heli_inspeccionado = models.IntegerField()
+	avion_carga_ingresado = models.IntegerField()
+	avion_carga_inspeccionado = models.IntegerField()
+	avion_carga_ffaa_ingresado = models.IntegerField()
+	avion_carga_ffaa_inspeccionado = models.IntegerField()
+	avion_pas_ffaa_ingresado = models.IntegerField()
+	avion_pas_ffaa_inspeccionado = models.IntegerField()
+	avioneta_ffaa_ingresada = models.IntegerField()
+	avioneta_ffaa_inspeccionada = models.IntegerField()
+	heli_ffaa_ingresado = models.IntegerField()
+	heli_ffaa_inspeccionado = models.IntegerField()
+	solicitud_inspeccion = models.ForeignKey(Sol_Inspeccion)
+	acta_inspeccion = models.ForeignKey(Acta_Inspeccion)
+
+	def __unicode__(self):
+		return self.fecha
 
 
 class Pasajero(models.Model):
@@ -258,35 +286,14 @@ class Pasajero(models.Model):
 	prox_puerto = models.CharField(max_length=30,choices=puertos)
 
 
-class Productos_interceptados(models.Model):
-	
-	intercepcion = models.ForeignKey(Prod_Interceptable)
-	estado = models.CharField(max_length=6,choices=estados)
-	cantidad = models.IntegerField()
-	kilos = models.FloatField()
-	rip = models.OneToOneField(Record_Intercepcion)
-	medida_int = models.CharField(max_length=21,choices=medidas_intercepcion)
-	comentario_int = models.TextField()
-
-
-class Intercepcion(Productos_interceptados):
-
-	pasajero = models.ForeignKey("Pasajero")
-
-
-class Abandono(Productos_interceptados):
-
-	dia = models.DateField()
-	inspector = models.ForeignKey(User,blank=False)
-	probable_origen = CountryField()
-	ubicacion = models.CharField(max_length=28)
-
-
 class Prod_Interceptable(models.Model):
 
-	categoria = models.CharField()
-	subtipo = models.CharField()
-	tipo = models.CharField()
+	categoria = models.CharField(max_length=8)
+	subtipo = models.CharField(max_length=30)
+	tipo = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.tipo
 
 
 class Record_Intercepcion(models.Model):
@@ -294,11 +301,51 @@ class Record_Intercepcion(models.Model):
 	kilos = models.FloatField()
 	folio_protocolo = models.IntegerField()
 
+	def __unicode__(self):
+		return self.folio_protocolo
+
+
+class Productos_Interceptados(models.Model):
+	
+	numero = models.IntegerField()
+	intercepcion = models.ManyToManyField(Prod_Interceptable)
+	estado = models.CharField(max_length=6,choices=estados)
+	cantidad = models.IntegerField()
+	kilos = models.FloatField()
+	rip = models.OneToOneField(Record_Intercepcion)
+	medida_int = models.CharField(max_length=21,choices=medidas_intercepcion)
+	comentario_int = models.TextField()
+
+	class Meta:
+		abstract = True
+
+
+class Intercepcion(Productos_Interceptados):
+
+	pasajero = models.ForeignKey(Pasajero)
+
+	def __unicode__(self):
+		return self.numero
+
+
+class Abandono(Productos_Interceptados):
+
+	dia = models.DateField()
+	inspector = models.ForeignKey(TipoUsuario, blank=False, related_name="+")
+	probable_origen = CountryField()
+	ubicacion = models.CharField(max_length=28)
+
+	def __unicode__(self):
+		return self.numero
+
 
 class Orden_Tratamiento(models.Model):
 
 	numero = models.IntegerField()
 	fecha = models.DateField()
+
+	def __unicode__(self):
+		return self.numero
 
 
 class Cores(models.Model):
@@ -306,11 +353,14 @@ class Cores(models.Model):
 	numero = models.IntegerField()
 	fecha = models.DateField()
 
+	def __unicode__(self):
+		return self.numero
+
 
 class Turno(models.Model):
 
-	jefe_turno = models.ForeignKey(TipoUsuario)
-	sgte_jefe_turno = models.ForeignKey(TipoUsuario)
+	jefe_turno = models.ForeignKey(TipoUsuario, related_name='+')
+	sgte_jefe_turno = models.ForeignKey(TipoUsuario, related_name='+')
 	dia_entrega = models.DateTimeField()
 	llenado_furi = models.CharField(max_length=3,choices=opciones_llenado)
 	obs_llenado = models.CharField(max_length=80)
@@ -340,7 +390,7 @@ class Turno(models.Model):
 	obs_incidentes = models.CharField(max_length=80)
 	deteccion_ingreso = models.CharField(max_length=3,choices=opciones_llenado)
 	obs_ingreso = models.CharField(max_length=80)
-	inspectores = models.ManyToManyField(TipoUsuario)
+	inspectores = models.ManyToManyField(TipoUsuario, related_name='+')
 
 
 class Acta_Intercepcion(models.Model):
@@ -349,6 +399,24 @@ class Acta_Intercepcion(models.Model):
 	intercepcion = models.ForeignKey(Intercepcion)
 	inspector = models.ForeignKey(TipoUsuario)
 	firma = models.BooleanField()
+
+	def __unicode__(self):
+		return self.numero
+
+
+class Acta_Retencion(models.Model):
+
+	numero = models.IntegerField(unique=True,blank=False)
+	intercepcion = models.ForeignKey(Intercepcion)
+	motivo = models.CharField(max_length=50)
+	desde = models.DateField()
+	hasta = models.DateField()
+	lugar = models.CharField(max_length=50)
+	tipo_envase = models.CharField(max_length=50)
+	observaciones = models.TextField()
+
+	def __unicode__(self):
+		return self.numero
 
 
 class Acta_Destruccion(models.Model):
@@ -364,14 +432,60 @@ class Acta_Destruccion(models.Model):
 	prod_desnaturalizacion = models.CharField(max_length=15)
 	observaciones = models.TextField()
 
+	def __unicode__(self):
+		return self.numero
 
-class Acta_Retencion(models.Model):
+
+class Acta_Denuncia_Citacion(models.Model):
 
 	numero = models.IntegerField(unique=True,blank=False)
-	intercepcion = models.ForeignKey(Intercepcion)
-	motivo = models.CharField(max_length=50)
-	desde = models.DateField()
-	hasta = models.DateField()
-	lugar = models.CharField(max_length=50)
-	tipo_envase = models.CharField(max_length=50)
+	infractor = models.ForeignKey(Pasajero, related_name="infractor_adc")
+	hechos = models.TextField()
 	observaciones = models.TextField()
+	acta_retencion = models.ForeignKey(Acta_Retencion,blank=True)
+	oficina_citacion = models.CharField(max_length=30)
+	hora_citacion = models.DateTimeField()
+	firma = models.BooleanField()
+
+	def __unicode__(self):
+		return self.numero
+
+
+class Acta_Incidente(models.Model):
+
+	numero = models.IntegerField(unique=True,blank=False)
+	pasajero = models.ForeignKey(Pasajero, related_name="pasajero_ai")
+	incidente = models.TextField()
+	observaciones = models.TextField()
+	firma = models.BooleanField()
+
+	def __unicode__(self):
+		return self.numero
+
+
+class Especimen_Cites(models.Model):
+
+	nombre_comun = models.CharField(max_length=30)
+	nombre_cientifico = models.CharField(max_length=30)
+	cantidad = models.IntegerField()
+	pais_procedencia = models.CharField(max_length=30)
+	acta_intercepcion = models.ForeignKey(Acta_Intercepcion)
+	estado_especimen = models.CharField(max_length=30)
+
+	def __unicode__(self):
+		return self.nombre_comun
+
+
+class Acta_Devolucion_Cites(models.Model):
+
+	numero = models.IntegerField(unique=True,blank=False)
+	fecha_devolucion = models.DateField()
+	especimen = models.ForeignKey(Especimen_Cites, related_name="+")
+	tenedor = models.ForeignKey(Pasajero, related_name="tenedor_adci")
+	causal = models.TextField()
+	receptor = models.CharField(max_length=50)
+	cargo_receptor = models.CharField(max_length=20)
+	institucion_receptor = models.CharField(max_length=20)
+
+	def __unicode__(self):
+		return self.numero
