@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
-from controles.views import *
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+from controles.views import PortadaFuri, GestionRegistros
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^ingreso/$', TemplateView.as_view(template_name='ingreso.html'), name="ingreso"),
-	url(r'^$', ingresar, name='home'),
+	#url(r'^ingreso/$', login_required(GestionRegistros.as_view()), name="ingreso"),
 	url(r'^admin/', include(admin.site.urls)),
+	url(r'^$', PortadaFuri.as_view(), name="inicio"),
+	
     # Examples:
     # url(r'^$', 'geoffroea.views.home', name='home'),
     # url(r'^geoffroea/', include('geoffroea.foo.urls')),

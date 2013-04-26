@@ -10,9 +10,11 @@ from controles.models import *
 
 class ControlTest(TestCase):
 
+    pass
+
     def test_urls_correctas(self):
         
-        urls_correctas  = (reverse("home"), reverse("ingreso"))
+        urls_correctas  = (reverse("inicio"))
         
         for url in urls_correctas:
             respuesta = self.client.get(url)
@@ -20,7 +22,7 @@ class ControlTest(TestCase):
     
     def test_urls_incorrectas(self):
         
-        urls_incorrectas = ("/sdgf/", "/ingreso/dfgtrh/")
+        urls_incorrectas = ("/sdgf")
         
         for url in urls_incorrectas:
             respuesta = self.client.get(url)

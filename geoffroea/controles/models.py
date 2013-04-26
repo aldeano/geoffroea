@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.localflavor.cl.cl_regions import REGION_CHOICES
-from controles.opciones import *
+from django_localflavor_cl.cl_regions import REGION_CHOICES
 from django_countries import CountryField
-
+from .opciones import *
 class TipoUsuario(models.Model):
 
 	usuario = models.OneToOneField(User, unique=True)

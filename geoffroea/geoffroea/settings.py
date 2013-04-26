@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Django settings for geoffroea project.
 
 import os
@@ -153,3 +154,6 @@ LOGGING = {
         },
     }
 }
+
+# Define la url a la cual irá el usuario después de ingresar exitosamente
+LOGIN_URL = '/ingreso/'
