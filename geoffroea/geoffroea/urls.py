@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	#url(r'^ingreso/$', login_required(GestionRegistros.as_view()), name="ingreso"),
 	url(r'^admin/', include(admin.site.urls)),
+	url(r'^gestion/', GestionRegistros.as_view(), name="gestion_registros"),
 	url(r'^$', PortadaFuri.as_view(), name="inicio"),
 	
     # Examples:

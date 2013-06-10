@@ -6,7 +6,11 @@
 	</head>
 	<body>
 		{% block cuerpo %}
-			<p>Eso por ahora</p>
+			<p>Ingrese no mas si puede</p>
+			<form action="" method="post" id="calcs_form">{% csrf_token %}
+                {{ formulario.as_p }}
+                <input type="submit" value="Go for it!" />
+            </form>
 		{% endblock cuerpo %}
 	</body>
 </html>
