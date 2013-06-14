@@ -156,4 +156,4 @@ LOGGING = {
 }
 
 # Define la url a la cual irá el usuario después de ingresar exitosamente
-LOGIN_URL = '/ingreso/'
+LOGIN_URL = '/'

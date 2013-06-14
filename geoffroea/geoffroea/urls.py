@@ -7,9 +7,8 @@ from controles.views import PortadaFuri, GestionRegistros
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	#url(r'^ingreso/$', login_required(GestionRegistros.as_view()), name="ingreso"),
 	url(r'^admin/', include(admin.site.urls)),
-	url(r'^gestion/', GestionRegistros.as_view(), name="gestion_registros"),
+	url(r'^gestion/', login_required(GestionRegistros.as_view()), name="gestion_registros"),
 	url(r'^$', PortadaFuri.as_view(), name="inicio"),
 	
     # Examples:
