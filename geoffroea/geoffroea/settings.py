@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'controles',
+    'south',
 )
 
 AUTH_PROFILE_MODULE = 'controles.TipoUsuario'
@@ -155,5 +156,5 @@ LOGGING = {
     }
 }
 
-# Define la url a la cual irá el usuario después de ingresar exitosamente
+# Define la url a la cual irá el usuario para ingresar a la aplicación
 LOGIN_URL = '/'
