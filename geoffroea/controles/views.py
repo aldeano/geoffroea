@@ -33,5 +33,9 @@ class GestionRegistros(View):
 
     def get(self, request):
         
-        dicc = {"resultado": "vas bien parece"}
+        usuario = request.user
+        identidad = usuario.username
+        correo = usuario.email
+        dicc = {"nombre": identidad, "correo": correo}
         return render(request, "ingreso.html", dicc)
+        
