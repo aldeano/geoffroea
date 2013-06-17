@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
+from .models import TipoUsuario
 
 class PortadaFuri(View):
 
@@ -33,9 +34,8 @@ class GestionRegistros(View):
 
     def get(self, request):
         
-        usuario = request.user
-        identidad = usuario.username
-        correo = usuario.email
-        dicc = {"nombre": identidad, "correo": correo}
+        digitador = request.user
+        perfil = TipoUsuario.objects.get(usuario=digitador)
+        dicc = {"nombre": perfil.nombre, "correo": digitador.email}
         return render(request, "ingreso.html", dicc)
         

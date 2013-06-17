@@ -9,7 +9,7 @@ from .opciones import *
 class TipoUsuario(models.Model):
 
 	usuario = models.OneToOneField(User, unique=True)
-	# nombre = models.CharField(max_length=40, blank=False)
+	nombre = models.CharField(max_length=40, blank=False)
 	tipo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
 	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
 
