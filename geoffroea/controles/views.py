@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from .models import TipoUsuario
+from .forms import FormularioPerfil
 
 class PortadaFuri(View):
 
@@ -36,6 +37,8 @@ class GestionRegistros(View):
         
         digitador = request.user
         perfil = TipoUsuario.objects.get(usuario=digitador)
-        dicc = {"nombre": perfil.nombre, "correo": digitador.email}
+		formulario_usuario = AuthenticationForm()
+		formulario_perfil = FormularioPerfil()
+        dicc = {"nombre": perfil.nombre, "region": perfil.region, "form_usuario": formulario_usuario, "form_perfil": formulario_perfil}
         return render(request, "ingreso.html", dicc)
         

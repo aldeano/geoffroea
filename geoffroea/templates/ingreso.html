@@ -4,5 +4,11 @@
 {% endblock titulo %}
 {% block cuerpo %}
 	<p>Hola poh {{ nombre }}</p>
-	<p>Tu correo es {{ correo }}</p>
+	<p>Tu trabajas en la {{ region }} región</p>
+	<p>Y quieres editar cosas como:</p>
+	<form action="" method="post" id="form">{% csrf_token %}
+		{{ form_usuario.as_p }}
+		{{ form_perfil.as_p }}
+		<input type="submit" value="Go for it!" />
+	</form>
 {% endblock cuerpo %}

@@ -7,7 +7,7 @@
 	<body>
 		{% block cuerpo %}
 			<p>Ingrese no mas si puede</p>
-			<form action="" method="post" id="calcs_form">{% csrf_token %}
+			<form action="" method="post" id="form">{% csrf_token %}
                 {{ formulario.as_p }}
                 <input type="submit" value="Go for it!" />
             </form>
