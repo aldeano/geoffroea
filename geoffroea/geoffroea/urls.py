@@ -2,13 +2,14 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from controles.views import PortadaFuri, GestionRegistros
+from controles.views import PortadaFuri, GestionRegistros, Salir
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^gestion/', login_required(GestionRegistros.as_view()), name="gestion_registros"),
+	url(r'^salir/', login_required(Salir.as_view()), name="salir"),
 	url(r'^$', PortadaFuri.as_view(), name="inicio"),
 	
     # Examples:

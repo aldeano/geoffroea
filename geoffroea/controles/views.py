@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
 from .models import TipoUsuario
 from .forms import FormularioPerfil
 
@@ -37,8 +37,15 @@ class GestionRegistros(View):
         
         digitador = request.user
         perfil = TipoUsuario.objects.get(usuario=digitador)
-		formulario_usuario = AuthenticationForm()
-		formulario_perfil = FormularioPerfil()
+        formulario_usuario = UserCreationForm()
+        formulario_perfil = FormularioPerfil()
         dicc = {"nombre": perfil.nombre, "region": perfil.region, "form_usuario": formulario_usuario, "form_perfil": formulario_perfil}
         return render(request, "ingreso.html", dicc)
+
+
+class Salir(View):
+    
+    def get(self,request):
         
+        logout(request)
+        return redirect('inicio')

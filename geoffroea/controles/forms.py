@@ -6,3 +6,4 @@ class FormularioPerfil(ModelForm):
 	
 	class Meta:
 		model = TipoUsuario
+		exclude = ('usuario',)

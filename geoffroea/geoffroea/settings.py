@@ -157,4 +157,4 @@ LOGGING = {
 }
 
 # Define la url a la cual irá el usuario para ingresar a la aplicación
-LOGIN_URL = '/'
+LOGIN_URL = 'inicio'
