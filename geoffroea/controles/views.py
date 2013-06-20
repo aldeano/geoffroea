@@ -16,7 +16,7 @@ class PortadaFuri(View):
 
     def post(self, request, *args, **kwargs):
         
-        formulario = AuthenticationForm(request.POST)
+        formulario = AuthenticationForm(data=request.POST)
         dicc = {'formulario': formulario}
         if formulario.is_valid:
             usuario = request.POST['username']
@@ -30,7 +30,10 @@ class PortadaFuri(View):
                     return render(request, 'index.html', dicc)
             else:
                 return render(request, 'index.html', dicc)
-
+        else:
+            return render(request, 'index.html', dicc)
+    
+    
 class GestionRegistros(View):
 
     def get(self, request):
