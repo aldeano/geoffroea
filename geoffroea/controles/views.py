@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from .models import TipoUsuario
-from .forms import FormularioPerfil
+from .forms import FormularioPerfil, FormularioDia
 
 class PortadaFuri(View):
 
@@ -40,10 +40,17 @@ class GestionRegistros(View):
         
         digitador = request.user
         perfil = TipoUsuario.objects.get(usuario=digitador)
-        formulario_usuario = UserCreationForm()
-        formulario_perfil = FormularioPerfil()
-        dicc = {"nombre": perfil.nombre, "region": perfil.region, "form_usuario": formulario_usuario, "form_perfil": formulario_perfil}
-        return render(request, "ingreso.html", dicc)
+        if perfil.tipo == "adm"
+            dicc = {"nombre": perfil.nombre}
+        elif perfil.tipo == "er":
+            formulario_usuario = UserCreationForm()
+            formulario_perfil = FormularioPerfil()
+            dicc = {"nombre": perfil.nombre, "region": perfil.region, "form_usuario": formulario_usuario, "form_perfil": formulario_perfil}
+            template = "ingreso.html"
+        elif perfil.tipo == "jf" or perfil.tipo == "insp":
+            formulario_usuario = FormularioDia()
+        
+        return render(request, template, dicc)
 
 
 class Salir(View):
