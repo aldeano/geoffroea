@@ -1,0 +1,8 @@
+{% extends "ingreso.html" %}
+{% block gestion %}
+<form action="" method="">{% csrf_token %}
+    {{ form_usuario.as_p }}
+    {{ form_perfil.as_p }}
+    <input type="submit" value="Guardar"/>
+</form>
+{% endblock %}

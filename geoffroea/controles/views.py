@@ -46,8 +46,9 @@ class GestionRegistros(View):
         elif perfil.tipo == "er":
             formulario_usuario = UserCreationForm()
             formulario_perfil = FormularioPerfil()
-            dicc = {"nombre": perfil.nombre, "region": perfil.region, "form_usuario": formulario_usuario, "form_perfil": formulario_perfil}
-            template = "ingreso.html"
+            dicc["form_usuario"] = formulario_usuario
+            dicc["form_perfil"] = formulario_perfil
+            template = "gestion/er.html"
         elif perfil.tipo == "jf" or perfil.tipo == "insp":
             formulario_usuario = FormularioDia()
         
