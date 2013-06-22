@@ -4,12 +4,7 @@
 {% endblock titulo %}
 {% block cuerpo %}
 	<p>Hola poh {{ nombre }}</p>
-	<p>Tu trabajas en la {{ region }} región</p>
-	<p>Y quieres editar cosas como:</p>
-	<form action="" method="post" id="form">{% csrf_token %}
-		{{ form_usuario.as_p }}
-		{{ form_perfil.as_p }}
-		<input type="submit" value="Go for it!" />
-	</form>
-	<a href="{% url 'salir' %}">Salir</a>
+	<p>Tu trabajas en la {{ region }} región y eres {{ cargo }}</p>
+	{% block gestion %}
+	{% endblock %}
 {% endblock cuerpo %}

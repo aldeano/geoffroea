@@ -40,8 +40,9 @@ class GestionRegistros(View):
         
         digitador = request.user
         perfil = TipoUsuario.objects.get(usuario=digitador)
-        if perfil.tipo == "adm"
-            dicc = {"nombre": perfil.nombre}
+        dicc = {"nombre": perfil.nombre, "region": perfil.region, "cargo": perfil.tipo}
+        if perfil.tipo == "adm":
+            template = "gestion/admin.html"
         elif perfil.tipo == "er":
             formulario_usuario = UserCreationForm()
             formulario_perfil = FormularioPerfil()
