@@ -1,26 +1,37 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django_localflavor_cl.cl_regions import REGION_CHOICES
 from django_countries import CountryField
 from .opciones import *
 
 
-class TipoUsuario(models.Model):
+# class Usuario(models.Model):
 
-	usuario = models.OneToOneField(User, unique=True)
-	nombre = models.CharField(max_length=40, blank=False)
-	tipo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
-	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
+	# usuario = models.OneToOneField(Usuario, unique=True)
+	# nombre = models.CharField(max_length=40, blank=False)
+	# tipo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
+	# region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
 
-	def __unicode__(self):
-		return self.tipo
+	# def __unicode__(self):
+		# return self.tipo
 
+
+class Usuario(AbstractUser):
+    """
+    Agrega mas campos al modelo de usuario que viene con django
+    """
+    cargo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
+    region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
+    
+    def __unicode__(self):
+        return "%s %s" % (self.first_name, self.last_name) 
+    
 class ControlesFronterizos(models.Model):
 
 	nombre = models.CharField(unique=True, max_length=30)
 	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
-	inspectores = models.ManyToManyField(User,null=True)
+	inspectores = models.ManyToManyField(Usuario,null=True)
 	latitud = models.DecimalField(max_digits=11,decimal_places=8)
 	longitud = models.DecimalField(max_digits=11,decimal_places=8)
 	turno = models.CharField(choices=horarios_ccff,max_length=12)
@@ -43,7 +54,7 @@ class Dia(models.Model):
 	y Dia_CCFF_Aereo tienen los medios de transporte de cada tipo de control
 	'''
 	fecha = models.DateField()
-	inspector = models.OneToOneField(User)
+	inspector = models.OneToOneField(Usuario)
 	#pasajeros
 	hombres_ingresados = models.IntegerField()
 	hombres_inspeccionados = models.IntegerField()
@@ -275,7 +286,7 @@ class Dia_CCFF_Aereo(Dia):
 class Pasajero(models.Model):
 
 	fecha = models.DateField(blank=False)
-	inspector = models.ForeignKey(User,blank=False)
+	inspector = models.ForeignKey(Usuario,blank=False)
 	tipo_doc = models.CharField(max_length=19,choices=tipos_documentos,blank=False)
 	n_doc = models.CharField(max_length=15,blank=False)
 	nombres_apellidos = models.CharField(max_length=40,blank=False)
@@ -333,7 +344,7 @@ class Intercepcion(Productos_Interceptados):
 class Abandono(Productos_Interceptados):
 
 	dia = models.DateField()
-	inspector = models.ForeignKey(TipoUsuario, blank=False, related_name="+")
+	inspector = models.ForeignKey(Usuario, blank=False, related_name="+")
 	probable_origen = CountryField()
 	ubicacion = models.CharField(max_length=28)
 
@@ -361,8 +372,8 @@ class Cores(models.Model):
 
 class Turno(models.Model):
 
-	jefe_turno = models.ForeignKey(TipoUsuario, related_name='+')
-	sgte_jefe_turno = models.ForeignKey(TipoUsuario, related_name='+')
+	jefe_turno = models.ForeignKey(Usuario, related_name='+')
+	sgte_jefe_turno = models.ForeignKey(Usuario, related_name='+')
 	dia_entrega = models.DateTimeField()
 	llenado_furi = models.CharField(max_length=3,choices=opciones_llenado)
 	obs_llenado = models.CharField(max_length=80)
@@ -392,14 +403,14 @@ class Turno(models.Model):
 	obs_incidentes = models.CharField(max_length=80)
 	deteccion_ingreso = models.CharField(max_length=3,choices=opciones_llenado)
 	obs_ingreso = models.CharField(max_length=80)
-	inspectores = models.ManyToManyField(TipoUsuario, related_name='+')
+	inspectores = models.ManyToManyField(Usuario, related_name='+')
 
 
 class Acta_Intercepcion(models.Model):
 	
 	numero = models.IntegerField(unique=True,blank=False)
 	intercepcion = models.ForeignKey(Intercepcion)
-	inspector = models.ForeignKey(TipoUsuario)
+	inspector = models.ForeignKey(Usuario)
 	firma = models.BooleanField()
 
 	def __unicode__(self):
@@ -425,7 +436,7 @@ class Acta_Destruccion(models.Model):
 
 	numero = models.IntegerField(unique=True,blank=False)
 	intercepcion = models.ForeignKey(Intercepcion)
-	inspector = models.ForeignKey(TipoUsuario)
+	inspector = models.ForeignKey(Usuario)
 	firma = models.BooleanField()
 	acta_intercepcion = models.ForeignKey(Acta_Intercepcion)
 	acta_retencion = models.ForeignKey(Acta_Retencion)

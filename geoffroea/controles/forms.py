@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
-from .models import TipoUsuario, ControlesFronterizos, Dia_CCFF_Terrestre
+from .models import Usuario, ControlesFronterizos, Dia_CCFF_Terrestre
 
 class FormularioPerfil(ModelForm):
 	
 	class Meta:
-		model = TipoUsuario
+		model = Usuario
 		exclude = ('usuario',)
 
 

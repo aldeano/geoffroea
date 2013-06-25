@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from .models import TipoUsuario
-from .forms import FormularioPerfil, FormularioDia
+from .models import Usuario
+from .forms import FormularioPerfil, FormularioDia, FormularioCCFF
 
 class PortadaFuri(View):
 
@@ -38,18 +38,20 @@ class GestionRegistros(View):
 
     def get(self, request):
         
-        digitador = request.user
-        perfil = TipoUsuario.objects.get(usuario=digitador)
-        dicc = {"nombre": perfil.nombre, "region": perfil.region, "cargo": perfil.tipo}
-        if perfil.tipo == "adm":
+        digitador = request.user.username
+        perfil = Usuario.objects.get(username=digitador)
+        dicc = {"nombre": perfil.first_name, "region": perfil.region, "cargo": perfil.cargo}
+        if perfil.cargo == "adm":
             template = "gestion/admin.html"
-        elif perfil.tipo == "er":
+        elif perfil.cargo == "er":
             formulario_usuario = UserCreationForm()
             formulario_perfil = FormularioPerfil()
+            formulario_ccff = FormularioCCFF()
             dicc["form_usuario"] = formulario_usuario
             dicc["form_perfil"] = formulario_perfil
+            dicc["form_ccff"] = formulario_ccff
             template = "gestion/er.html"
-        elif perfil.tipo == "jf" or perfil.tipo == "insp":
+        elif perfil.cargo == "jf" or perfil.tipo == "insp":
             formulario_usuario = FormularioDia()
         
         return render(request, template, dicc)

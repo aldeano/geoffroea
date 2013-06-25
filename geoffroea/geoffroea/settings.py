@@ -125,7 +125,7 @@ INSTALLED_APPS = (
     'south',
 )
 
-AUTH_PROFILE_MODULE = 'controles.TipoUsuario'
+AUTH_USER_MODEL = 'controles.Usuario'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
