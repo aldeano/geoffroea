@@ -2,7 +2,6 @@
 {% block gestion %}
 <p>Quieres agregar un usuario nuevo?</p>
 <form action="" method="post">{% csrf_token %}
-    {{ form_usuario.as_p }}
     {{ form_perfil.as_p }}
     <input type="submit" value="Guardar"/>
 </form>

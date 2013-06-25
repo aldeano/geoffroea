@@ -44,14 +44,12 @@ class GestionRegistros(View):
         if perfil.cargo == "adm":
             template = "gestion/admin.html"
         elif perfil.cargo == "er":
-            formulario_usuario = UserCreationForm()
             formulario_perfil = FormularioPerfil()
             formulario_ccff = FormularioCCFF()
-            dicc["form_usuario"] = formulario_usuario
             dicc["form_perfil"] = formulario_perfil
             dicc["form_ccff"] = formulario_ccff
             template = "gestion/er.html"
-        elif perfil.cargo == "jf" or perfil.tipo == "insp":
+        elif perfil.cargo == "jf" or perfil.cargo == "insp":
             formulario_usuario = FormularioDia()
         
         return render(request, template, dicc)

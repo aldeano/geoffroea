@@ -6,7 +6,7 @@ class FormularioPerfil(ModelForm):
 	
 	class Meta:
 		model = Usuario
-		exclude = ('usuario',)
+		fields = ("username", "password", "first_name", "last_name", "cargo", "region")
 
 
 class FormularioCCFF(ModelForm):

@@ -25,7 +25,7 @@ class Usuario(AbstractUser):
     region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
     
     def __unicode__(self):
-        return "%s %s" % (self.first_name, self.last_name) 
+        return "%s %s" % (self.first_name, self.last_name)
     
 class ControlesFronterizos(models.Model):
 
