@@ -6,23 +6,20 @@ from django_countries import CountryField
 from .opciones import *
 
 
-# class Usuario(models.Model):
-
-	# usuario = models.OneToOneField(Usuario, unique=True)
-	# nombre = models.CharField(max_length=40, blank=False)
-	# tipo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
-	# region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
-
-	# def __unicode__(self):
-		# return self.tipo
-
-
 class Usuario(AbstractUser):
     """
     Agrega mas campos al modelo de usuario que viene con django
     """
     cargo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
     region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
+    
+    def get_full_name(self):
+        # El usuario es identificado por su nombre y apellido
+        return "%s %s" % (self.first_name, self.last_name)
+    
+    def get_short_name(self):
+        # El usuario es identificado sólo por su nombre
+        return self.first_name
     
     def __unicode__(self):
         return "%s %s" % (self.first_name, self.last_name)

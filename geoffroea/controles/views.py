@@ -50,7 +50,9 @@ class GestionRegistros(View):
             dicc["form_ccff"] = formulario_ccff
             template = "gestion/er.html"
         elif perfil.cargo == "jf" or perfil.cargo == "insp":
-            formulario_usuario = FormularioDia()
+            formulario_dia = FormularioDia()
+            dicc["form_dia"] = formulario_dia
+            template = "gestion/dia.html"
         
         return render(request, template, dicc)
 
