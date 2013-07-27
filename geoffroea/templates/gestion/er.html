@@ -2,7 +2,12 @@
 {% block gestion %}
 <p>Quieres agregar un usuario nuevo?</p>
 <form action="" method="post">{% csrf_token %}
-    {{ form_dia.as_p }}
-    <input type="submit" value="Guardar"/>
+    {{ form_perfil.as_p }}
+    <input type="submit" value="Guardar Usuario"/>
+</form>
+<p>O un nuevo control fronterizo?</p>
+<form action="" method="post">{% csrf_token %}
+    {{ form_ccff.as_p }}
+    <input type="submit" value="Guardar CCFF"/>
 </form>
 {% endblock %}

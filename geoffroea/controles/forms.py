@@ -6,7 +6,9 @@ class FormularioPerfil(ModelForm):
 	
 	class Meta:
 		model = Usuario
-		fields = ("username", "password", "first_name", "last_name", "cargo", "region")
+		fields = ("username", "password", "first_name", "last_name", "cargo",)
+	
+	# def __init__(self, *args, **kwargs)
 
 
 class FormularioCCFF(ModelForm):
