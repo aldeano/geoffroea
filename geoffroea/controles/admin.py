@@ -3,7 +3,6 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin, UserCreationForm, UserChangeForm
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import ControlesFronterizos, Usuario
 
 class UsuarioCreationForm(UserCreationForm):

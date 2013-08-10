@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 tipos_usuarios = (
-    ("adm", "Administrador"),
+    ("adm", "Administrador(a)"),
     ("er", "Encargado(a) Regional"),
     ("jf", "Jefe(a) de Turno"),
-    ("insp", "Inspector")
+    ("insp", "Inspector(a)")
     )
 
 tipos_documentos = (

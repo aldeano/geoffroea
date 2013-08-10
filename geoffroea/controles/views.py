@@ -38,14 +38,16 @@ class GestionRegistros(View):
 
     def get(self, request):
         
-        digitador = request.user.username
-        perfil = Usuario.objects.get(username=digitador)
-        dicc = {"nombre": perfil.first_name, "region": perfil.region, "cargo": perfil.cargo}
+        usuario = request.user
+        perfil = Usuario.objects.get(username=usuario.username)
+        region = perfil.region
+        dicc = {"nombre": perfil.first_name, "region": region, "cargo": perfil.cargo}
         if perfil.cargo == "adm":
             template = "gestion/admin.html"
         elif perfil.cargo == "er":
-            formulario_perfil = FormularioPerfil()
-            formulario_ccff = FormularioCCFF()
+            formulario_perfil = FormularioPerfil(initial=
+            {'region': region,})
+            formulario_ccff = FormularioCCFF(region)
             dicc["form_perfil"] = formulario_perfil
             dicc["form_ccff"] = formulario_ccff
             template = "gestion/er.html"
