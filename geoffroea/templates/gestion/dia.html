@@ -1,8 +1,9 @@
 {% extends "ingreso.html" %}
 {% block gestion %}
+<hr />
 <p>Quieres agregar un dia de acción?</p>
-<form action="" method="post">{% csrf_token %}
-    {{ form_dia.as_p }}
-    <input type="submit" value="Guardar"/>
-</form>
+<p>O quieres editar un día?</p>
+<hr />
+<p>O quieres agregar una intercepción?</p>
+<p>Tal ves editar una?</p>
 {% endblock %}

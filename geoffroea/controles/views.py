@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
-from django.views.generic import View
+from django.views.generic import View, CreateView, UpdateView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from .models import Usuario
@@ -40,20 +40,12 @@ class GestionRegistros(View):
         
         usuario = request.user
         perfil = Usuario.objects.get(username=usuario.username)
-        region = perfil.region
-        dicc = {"nombre": perfil.first_name, "region": region, "cargo": perfil.cargo}
+        dicc = {"nombre": perfil.first_name, "region": perfil.region, "cargo": perfil.cargo}
         if perfil.cargo == "adm":
             template = "gestion/admin.html"
         elif perfil.cargo == "er":
-            formulario_perfil = FormularioPerfil(initial=
-            {'region': region,})
-            formulario_ccff = FormularioCCFF(region)
-            dicc["form_perfil"] = formulario_perfil
-            dicc["form_ccff"] = formulario_ccff
             template = "gestion/er.html"
         elif perfil.cargo == "jf" or perfil.cargo == "insp":
-            formulario_dia = FormularioDia()
-            dicc["form_dia"] = formulario_dia
             template = "gestion/dia.html"
         
         return render(request, template, dicc)
@@ -65,3 +57,5 @@ class Salir(View):
         
         logout(request)
         return redirect('inicio')
+
+

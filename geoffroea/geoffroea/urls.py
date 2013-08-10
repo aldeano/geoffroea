@@ -8,8 +8,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'^admin/', include(admin.site.urls)),
-	url(r'^gestion/', login_required(GestionRegistros.as_view()), name="gestion_registros"),
-	url(r'^salir/', login_required(Salir.as_view()), name="salir"),
+	# url(r'^gestion/$', login_required(GestionRegistros.as_view()), name="gestion_registros"),
+	# url(r'^gestion/$', login_required(GestionRegistros.as_view()), name="gestion_registros"),
+	url(r'^gestion/$', login_required(GestionRegistros.as_view()), name="gestion_registros"),
+	url(r'^salir/$', login_required(Salir.as_view()), name="salir"),
 	url(r'^$', PortadaFuri.as_view(), name="inicio"),
 	
     # Examples:

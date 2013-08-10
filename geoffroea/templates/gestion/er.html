@@ -1,13 +1,9 @@
 {% extends "ingreso.html" %}
 {% block gestion %}
+<hr />
 <p>Quieres agregar un usuario nuevo?</p>
-<form action="" method="post">{% csrf_token %}
-    {{ form_perfil.as_p }}
-    <input type="submit" value="Guardar Usuario"/>
-</form>
-<p>O un nuevo control fronterizo?</p>
-<form action="" method="post">{% csrf_token %}
-    {{ form_ccff.as_p }}
-    <input type="submit" value="Guardar CCFF"/>
-</form>
+<p>O quieres editar uno?</p>
+<hr />
+<p>Quieres agregar un CCFF nuevo?</p>
+<p>O quieres editar uno?</p>
 {% endblock %}
