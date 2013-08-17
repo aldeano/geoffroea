@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.views.generic import View, CreateView, UpdateView
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-from .models import Usuario
+from .models import Usuario, ControlesFronterizos
 from .forms import FormularioPerfil, FormularioDia, FormularioCCFF
 
 class PortadaFuri(View):
@@ -42,13 +42,32 @@ class GestionRegistros(View):
         perfil = Usuario.objects.get(username=usuario.username)
         dicc = {"nombre": perfil.first_name, "region": perfil.region, "cargo": perfil.cargo}
         if perfil.cargo == "adm":
-            template = "gestion/admin.html"
+            template = "controles/admin.html"
         elif perfil.cargo == "er":
-            template = "gestion/er.html"
+            template = "controles/er.html"
         elif perfil.cargo == "jf" or perfil.cargo == "insp":
-            template = "gestion/dia.html"
+            template = "controles/dia.html"
         
         return render(request, template, dicc)
+
+class AgregarCCFF(CreateView):
+    
+    model = ControlesFronterizos
+    
+    
+class ModificarCCFF(UpdateView): 
+    
+    model = ControlesFronterizos
+    
+    
+class AgregarInspector(CreateView):
+    
+    pass
+
+
+class ModificarInspector(UpdateView):
+    
+    pass
 
 
 class Salir(View):
