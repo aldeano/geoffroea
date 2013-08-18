@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.views.generic import View, CreateView, UpdateView
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Usuario, ControlesFronterizos
 from .forms import FormularioPerfil, FormularioDia, FormularioCCFF
 
@@ -53,11 +53,23 @@ class GestionRegistros(View):
 class AgregarCCFF(CreateView):
     
     model = ControlesFronterizos
+        
+    def get_context_data(self, **kwargs):
+        
+        context = super(AgregarCCFF, self).get_context_data(**kwargs)
+        usuario = Usuario.objects.get(username=self.request.user.username)
+        context['form'] = FormularioCCFF(usuario.region)
+        context['nombre'] = usuario.first_name
+        context['region'] = usuario.region
+        context['cargo'] = usuario.cargo
+        
+        return context
     
     
 class ModificarCCFF(UpdateView): 
     
     model = ControlesFronterizos
+    form = FormularioCCFF
     
     
 class AgregarInspector(CreateView):
