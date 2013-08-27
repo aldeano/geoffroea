@@ -35,7 +35,7 @@ class ControlesFronterizos(models.Model):
 	turno = models.CharField(choices=horarios_ccff,max_length=12)
 	horario_inicio = models.TimeField(null=True)
 	horario_termino = models.TimeField(null=True)
-	comuna = models.CharField(max_length=25)
+	comuna = models.CharField(max_length=25,blank=False)
 	codigo = models.CharField(max_length=8,blank=False)
 
 	def __unicode__(self):
