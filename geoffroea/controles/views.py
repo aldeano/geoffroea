@@ -58,10 +58,10 @@ class AgregarCCFF(CreateView):
         
         context = super(AgregarCCFF, self).get_context_data(**kwargs)
         usuario = Usuario.objects.get(username=self.request.user.username)
-        context['form'] = FormularioCCFF(usuario.region)
+        context['form'] = FormularioCCFF(usuario)
         context['nombre'] = usuario.first_name
-        context['region'] = usuario.region
-        context['cargo'] = usuario.cargo
+        context['region'] = usuario.get_region_display()
+        context['cargo'] = usuario.get_cargo_display()
         
         return context
     

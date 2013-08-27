@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from .models import Usuario, ControlesFronterizos, Dia_CCFF_Terrestre
+from opciones import comunas
 
 class FormularioPerfil(forms.ModelForm):
 	# estas opciones están fijas porque el formulario sólo se ocupa en el
@@ -20,10 +21,11 @@ class FormularioPerfil(forms.ModelForm):
 
 class FormularioCCFF(forms.ModelForm):
 	
-	def __init__(self, region, *args, **kwargs):
+	def __init__(self, usuario, *args, **kwargs):
 		super(FormularioCCFF, self).__init__(*args, **kwargs)
-		self.fields["inspectores"].queryset = Usuario.objects.filter(region=region)
-
+		self.fields["inspectores"].queryset = Usuario.objects.filter(region=usuario.region)
+		self.fields["comuna"] = forms.ChoiceField(choices=comunas[usuario.get_region_display()])
+  
 	class Meta:
 		model = ControlesFronterizos
 		exclude = ("region",)

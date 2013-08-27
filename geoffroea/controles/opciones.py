@@ -18,6 +18,12 @@ opciones_genero = (
     ("f", "Femenino")
     )
 
+tipo_ccff = (
+    ("terrestre","Terrestre"),
+    ("aereo", "Aéreo"),
+    ("maritimo", "Marítimo")
+    )
+    
 horarios_ccff = (
     ("continuado", "continuado"),
     ("turnos", "turnos"),
@@ -193,23 +199,23 @@ tipos_vuelo = (
     )
 
 #obtenido en https://github.com/witoi/django-cl/
-comunas = (
-    # ('15', u'Región de Arica y Parinacota'),
+comunas = {
+    u'Región de Arica y Parinacota':(
     ('15101', u'Arica'),
     ('15102', u'Camarones'), 
     ('15201', u'Putre'),
-    ('15202', u'General '),
-
-    # ('01', u'Región de Tarapacá'),
+    ('15202', u'General ')
+    ),
+    u'Región de Tarapacá':(
     ('01101', u'Iquique'),
     ('01107', u'Alto Hospicio'),
     ('01401', u'Pozo Almonte'),
     ('01402', u'Camiña'),
     ('01403', u'Colchane'),
     ('01404', u'Huara'),
-    ('01405', u'Pica'),
-
-    # ('02', u'Región de Antofagasta'),
+    ('01405', u'Pica')
+    ),
+    u'Región de Antofagasta':(
     ('02101', u'Antofagasta'),
     ('02102', u'Mejillones'),
     ('02103', u'Sierra Gorda'),
@@ -219,8 +225,8 @@ comunas = (
     ('02203', u'San Pedro de Atacama'),
     ('02301', u'Tocopilla'),
     ('02302', u'María Elena'),
-
-    # ('03', u'Región de Atacama'),
+    ),
+    u'Región de Atacama':(
     ('03101', u'Copiapó'),
     ('03102', u'Caldera'),
     ('03103', u'Tierra Amarilla'),
@@ -230,8 +236,8 @@ comunas = (
     ('03302', u'Alto del Carmen'),
     ('03303', u'Freirina'),
     ('03304', u'Huasco'),
-
-    # ('04', u'Región de Coquimbo'),
+    ),
+    u'Región de Coquimbo':(
     ('04101', u'La Serena'),
     ('04102', u'Coquimbo'),
     ('04103', u'Andacollo'),
@@ -247,8 +253,8 @@ comunas = (
     ('04303', u'Monte Patria'),
     ('04304', u'Punitaqui'),
     ('04305', u'Río Hurtado'),
-
-    # ('05', u'Región de Valparaíso'),
+    ),
+    u'Región de Valparaíso':(
     ('05101', u'Valparaíso'),
     ('05102', u'Casablanca'),
     ('05103', u'Concón'),
@@ -287,8 +293,8 @@ comunas = (
     ('05801', u'Limache'),
     ('05801', u'Olmué'),
     ('05801', u'Villa Alemana'),
-
-    # ('06', u'Región del Libertador General Bernardo O\'Higgins'),
+    ),
+    u'Región del Libertador General Bernardo O\'Higgins':(
     ('06101', u'Rancagua'),
     ('06102', u'Codegua'),
     ('06103', u'Coinco'),
@@ -322,8 +328,8 @@ comunas = (
     ('06308', u'Placilla'),
     ('06309', u'Pumanque'),
     ('06310', u'Santa Cruz'),
-
-    # ('07', u'Región del Maule'),
+    ),
+    u'Región del Maule':(
     ('07101', u'Talca'),
     ('07102', u'Constitución'),
     ('07103', u'Curepto'),
@@ -354,8 +360,8 @@ comunas = (
     ('07406', u'San Javier'),
     ('07407', u'Villa Alegre'),
     ('07408', u'Yerbas Buenas'),
-
-    # ('08', u'Región del Biobío'),
+    ),
+    u'Región del Biobío':(
     ('08101', u'Concepción'),
     ('08102', u'Coronel'),
     ('08103', u'Chiguayante'),
@@ -410,8 +416,8 @@ comunas = (
     ('08419', u'San Nicolás'),
     ('08420', u'Treguaco'),
     ('08421', u'Yungay'),
-
-    # ('09', u'Región de La Araucanía'),
+    ),
+    u'Región de La Araucanía':(
     ('09101', u'Temuco'),
     ('09102', u'Carahue'),
     ('09103', u'Cunco'),
@@ -444,8 +450,8 @@ comunas = (
     ('09209', u'Renaico'),
     ('09210', u'Traiguén'),
     ('09211', u'Victoria'),
-
-    # ('14', u'Región de Los Ríos'),
+    ),
+    u'Región de Los Ríos':(
     ('14101', u'Valdivia'),
     ('14102', u'Corral'),
     ('14103', u'Lanco'),
@@ -458,8 +464,8 @@ comunas = (
     ('14202', u'Futrono'),
     ('14203', u'Lago Ranco'),
     ('14204', u'Río Bueno'),
-
-    # ('10', u'Región de Los Lagos'),
+    ),
+    u'Región de Los Lagos':(
     ('10101', u'Puerto Montt'),
     ('10102', u'Calbuco'),
     ('10103', u'Cochamó'),
@@ -490,8 +496,8 @@ comunas = (
     ('10402', u'Futaleufú'),
     ('10403', u'Hualaihué'),
     ('10404', u'Palena'),
-
-    # ('11', u'Región de Aisén del General Carlos Ibañez del Campo'),
+    ),
+    u'Región de Aisén del General Carlos Ibañez del Campo':(
     ('11101', u'Coihaique'),
     ('11102', u'Lago Verde'),
     ('11201', u'Aisén'),
@@ -502,8 +508,8 @@ comunas = (
     ('11303', u'Tortel'),
     ('11401', u'Chile Chico'),
     ('11402', u'Río Ibáñez'),
-
-    # ('12', u'Región de Magallanes y de la Antártica Chilena'),
+    ),
+    u'Región de Magallanes y de la Antártica Chilena':(
     ('12101', u'Punta Arenas'),
     ('12102', u'Laguna Blanca'),
     ('12103', u'Río Verde'),
@@ -515,8 +521,8 @@ comunas = (
     ('12303', u'Timaukel'),
     ('12401', u'Natales'),
     ('12402', u'Torres del Paine'),
-
-    # ('13', u'Región Metropolitana de Santiago'),
+    ),
+    u'Región Metropolitana de Santiago':(
     ('13101', u'Santiago'),
     ('13102', u'Cerrillos'),
     ('13103', u'Cerro Navia'),
@@ -569,4 +575,5 @@ comunas = (
     ('13603', u'Isla de Maipo'),
     ('13604', u'Padre Hurtado'),
     ('13605', u'Peñaflor'),
-)
+    ),
+}

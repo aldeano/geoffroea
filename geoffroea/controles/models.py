@@ -28,13 +28,14 @@ class ControlesFronterizos(models.Model):
 
 	nombre = models.CharField(unique=True, max_length=30)
 	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
+	tipo = models.CharField(choices=tipo_ccff, max_length=10,blank=False)
 	inspectores = models.ManyToManyField(Usuario,null=True)
 	latitud = models.DecimalField(max_digits=11,decimal_places=8)
 	longitud = models.DecimalField(max_digits=11,decimal_places=8)
 	turno = models.CharField(choices=horarios_ccff,max_length=12)
 	horario_inicio = models.TimeField(null=True)
 	horario_termino = models.TimeField(null=True)
-	comuna = models.CharField(choices=comunas,max_length=25)
+	comuna = models.CharField(max_length=25)
 	codigo = models.CharField(max_length=8,blank=False)
 
 	def __unicode__(self):
