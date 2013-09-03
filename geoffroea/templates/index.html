@@ -8,10 +8,20 @@
 		{% block cuerpo %}
 			<p>Ingrese no mas si puede</p>
 			<div class="error">
-			    {{ formulario.username.errors }}
+			    {{ formulario.non_field_errors }}
 			</div>
 			<form action="" method="post" id="form">{% csrf_token %}
-                {{ formulario.as_p }}
+			    <div class="fieldWrapper">
+			        {{ formulario.username.errors }}
+			        <label for="id_username">Usuario:</label>
+			        {{ formulario.username }}
+			    </div>
+			    <div class="fieldWrapper">
+			        {{ formulario.password.errors }}
+			        <label for="id_password">Clave:</label>
+			        {{ formulario.password }}
+			    </div>
+                
                 <input type="submit" value="Go for it!" />
             </form>
 		{% endblock cuerpo %}

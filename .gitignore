@@ -6,10 +6,13 @@
 # Directories #
 ###############
 logs/
+.git/
+geoffroea/controles/migrations/
 
 # Specific files #
 ##################
 git-remove-history
+geoffroea/.schema
 
 # OS generated files #
 ######################

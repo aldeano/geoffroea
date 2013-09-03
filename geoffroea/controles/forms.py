@@ -25,7 +25,20 @@ class FormularioCCFF(forms.ModelForm):
 		super(FormularioCCFF, self).__init__(*args, **kwargs)
 		self.fields["inspectores"].queryset = Usuario.objects.filter(region=usuario.region)
 		self.fields["comuna"] = forms.ChoiceField(choices=comunas[usuario.get_region_display()])
-  
+	
+	def clean(self):
+		if self.cleaned_data.get('turno') == "turnos":
+			if self.cleaned_data.get('horario_inicio') == False:
+				raise ValidationError(
+					u"Si el control funciona en turnos debes asignar horario de inicio"
+				)
+			elif self.cleaned_data.get('horario_termino') == False:
+				raise ValidationError(
+					u"Si el control funciona en turnos debes asignar horario de término"
+				)
+				
+		return sef.cleaned_data
+
 	class Meta:
 		model = ControlesFronterizos
 		exclude = ("region",)
