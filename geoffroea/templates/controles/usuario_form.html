@@ -1,0 +1,10 @@
+{% extends "ingreso.html" %}
+{% block gestion %}
+<p>Nuevo Usuario?</p>
+<form action="/" method="post">{% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+    <input type="submit" value="Agrega Usuario"/>
+</form>
+<a href="{% url 'gestion_registros' %}">Regresar</a>
+{% endblock %}

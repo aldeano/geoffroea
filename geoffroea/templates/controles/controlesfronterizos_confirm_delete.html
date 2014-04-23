@@ -1,0 +1,8 @@
+{% extends "ingreso.html" %}
+{% block gestion %}
+<h1>Seguro/a que quieres borrar este control?</h1>
+{{ object }}
+<form action="." method="post">{% csrf_token %}
+	<input type="submit" value="Borrar" />
+</form>
+{% endblock %}

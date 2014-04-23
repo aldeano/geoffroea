@@ -1,0 +1,12 @@
+{% extends "ingreso.html" %}
+{% block gestion %}
+<p>Usuarios</p>
+<ul>
+	{% for usuario in object_list %}
+	<li>
+		<a href="{% url 'modificar_insp' %}">{{ usuario.get_full_name }}</a>
+		<a href="{% url 'borrar_insp' %}">borrar</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}

@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
+  # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django_countries import CountryField
+from django_countries.fields import CountryField
 from localflavor.cl.cl_regions import REGION_CHOICES
 from .opciones import *
 

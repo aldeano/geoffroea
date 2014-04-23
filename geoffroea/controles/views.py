@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.views.generic import View, CreateView, UpdateView
+from django.views.generic import View, CreateView, UpdateView, ListView, DetailView, DeleteView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Usuario, ControlesFronterizos
@@ -41,7 +42,7 @@ class GestionRegistros(View):
         
         usuario = request.user
         perfil = Usuario.objects.get(username=usuario.username)
-        dicc = {"nombre": perfil.first_name, "region": perfil.region, "cargo": perfil.cargo}
+        dicc = {"nombre": perfil.first_name, "region": perfil.get_region_display(), "cargo": perfil.get_cargo_display()}
         if perfil.cargo == "adm":
             template = "controles/admin.html"
         elif perfil.cargo == "er":
@@ -51,36 +52,84 @@ class GestionRegistros(View):
         
         return render(request, template, dicc)
 
-class AgregarCCFF(CreateView):
-    
-    model = ControlesFronterizos
-        
-    def get_context_data(self, **kwargs):
-        
-        context = super(AgregarCCFF, self).get_context_data(**kwargs)
-        usuario = Usuario.objects.get(username=self.request.user.username)
-        context['form'] = FormularioCCFF(usuario)
-        context['nombre'] = usuario.first_name
-        context['region'] = usuario.get_region_display()
-        context['cargo'] = usuario.get_cargo_display()
-        
-        return context
-    
-    
-class ModificarCCFF(UpdateView): 
-    
-    model = ControlesFronterizos
-    form = FormularioCCFF
-    
-    
-class AgregarInspector(CreateView):
-    
-    pass
+
+class UsuarioMixin(object):
+	
+	def obtener_info_usuario(self):
+		
+		usuario = Usuario.objects.get(username=self.request.user.username)
+		nombre = usuario.first_name
+		region = usuario.get_region_display()
+		cargo = usuario.get_cargo_display()
+		
+		return nombre, region, cargo 
+		
+	def get_context_data(self, **kwargs):
+		
+		contexto = super(UsuarioMixin, self).get_context_data(**kwargs)
+		contexto['nombre'] = self.obtener_info_usuario()[0]
+		contexto['region'] = self.obtener_info_usuario()[1]
+		contexto['cargo'] = self.obtener_info_usuario()[2]
+		
+		return contexto
 
 
-class ModificarInspector(UpdateView):
+class ListarCCFF(UsuarioMixin, ListView):
     
-    pass
+    model = ControlesFronterizos
+    form = FormularioCCFF    
+    
+
+class DetallesCCFF(UsuarioMixin, DetailView):
+	
+	model = ControlesFronterizos
+
+
+class AgregarCCFF(UsuarioMixin, CreateView):
+    
+    model = ControlesFronterizos
+    form_class = FormularioCCFF
+    success_url = reverse_lazy('listar_ccff')
+
+
+class BorrarCCFF(UsuarioMixin, DeleteView):
+	
+	model = ControlesFronterizos
+	success_url = reverse_lazy('listar_ccff')
+
+
+class ModificarCCFF(UsuarioMixin, UpdateView): 
+
+	model = ControlesFronterizos
+	form = FormularioCCFF
+	success_url = reverse_lazy('listar_ccff')
+
+
+class ListarInspector(UsuarioMixin, ListView):
+    
+    model = Usuario
+
+
+class DetallesInspector(UsuarioMixin, DetailView):
+	
+	model = Usuario
+	success_url = reverse_lazy('listar_insp')
+
+	    
+class AgregarInspector(UsuarioMixin, CreateView):
+    
+    model = Usuario
+    form_class = FormularioPerfil
+    
+
+class BorrarInspector(UsuarioMixin, DeleteView):
+	
+	model = Usuario
+	
+
+class ModificarInspector(UsuarioMixin, UpdateView):
+    
+    model = Usuario
 
 
 class Salir(View):

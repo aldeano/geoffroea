@@ -465,7 +465,7 @@ comunas = {
     ('14203', u'Lago Ranco'),
     ('14204', u'Río Bueno'),
     ),
-    u'Región de Los Lagos':(
+    u'Región de los Lagos':(
     ('10101', u'Puerto Montt'),
     ('10102', u'Calbuco'),
     ('10103', u'Cochamó'),

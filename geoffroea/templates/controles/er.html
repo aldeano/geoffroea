@@ -2,9 +2,11 @@
 {% block gestion %}
 <p>Que quieres hacer?</p>
 <hr />
-<p><a href="{% url 'agregar_ins' %}">Agregar un inspector?</a></p>
-<p><a href="{% url 'modificar_ins' %}">Modificar un inspector?</a></p>
+Con los usuarios:
+<a href="{% url 'listar_insp' %}">Ver todos los inspectores</a> | 
+<a href="{% url 'agregar_insp' %}">Agregar un inspector?</a>
 <hr />
-<p><a href="{% url 'agregar_ccff' %}">Agregar un control?</a></p>
-<p><a href="{% url 'modificar_ccff' %}">Modificar un control?</a></p>
+Con los controles fronterizos:
+<a href="{% url 'listar_ccff' %}">Ver todos los controles?</a> | 
+<a href="{% url 'agregar_ccff' %}">Agregar un control?</a>
 {% endblock %}

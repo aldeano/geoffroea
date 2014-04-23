@@ -1,0 +1,12 @@
+{% extends "ingreso.html" %}
+{% block gestion %}
+<p>Controles</p>
+<ul>
+	{% for control in ControlesFronterizos_list %}
+	<li>
+		<a href="{% url 'control_edit' control.id %}">{{ control.nombre }}</a>
+		<a href="{% url 'control_delete' control.id %}">borrar</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}

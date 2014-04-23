@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'controles',
     'south',
+    'django_countries'
 )
 
 AUTH_USER_MODEL = 'controles.Usuario'
