@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.generic import View, CreateView, UpdateView, ListView, DetailView, DeleteView
 from django.contrib.auth import authenticate, login, logout
@@ -75,10 +75,12 @@ class UsuarioMixin(object):
 
 
 class ListarCCFF(UsuarioMixin, ListView):
-    
-    model = ControlesFronterizos
+	
     form = FormularioCCFF    
     
+    def get_queryset(self):
+		self.usuario = get_object_or_404(Usuario, username=self.request.user)
+		return ControlesFronterizos.objects.filter(reqion=self.usuario.region)
 
 class DetallesCCFF(UsuarioMixin, DetailView):
 	
@@ -90,7 +92,12 @@ class AgregarCCFF(UsuarioMixin, CreateView):
     model = ControlesFronterizos
     form_class = FormularioCCFF
     success_url = reverse_lazy('listar_ccff')
-
+    
+    def get_form_kwargs(self):
+        kwargs = super(AgregarCCFF, self).get_form_kwargs()
+        kwargs.update({'usuario': self.request.user})
+        return kwargs
+    
 
 class BorrarCCFF(UsuarioMixin, DeleteView):
 	
@@ -107,7 +114,9 @@ class ModificarCCFF(UsuarioMixin, UpdateView):
 
 class ListarInspector(UsuarioMixin, ListView):
     
-    model = Usuario
+    def get_queryset(self):
+		self.usuario = get_object_or_404(Usuario, username=self.request.user)
+		return Usuarios.objects.filter(reqion=self.usuario.region)
 
 
 class DetallesInspector(UsuarioMixin, DetailView):
@@ -120,7 +129,8 @@ class AgregarInspector(UsuarioMixin, CreateView):
     
     model = Usuario
     form_class = FormularioPerfil
-    
+    success_url = reverse_lazy('listar_insp')
+
 
 class BorrarInspector(UsuarioMixin, DeleteView):
 	
