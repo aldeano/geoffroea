@@ -24,7 +24,7 @@ class FormularioCCFF(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		usuario = kwargs.pop("usuario")
 		super(FormularioCCFF, self).__init__(*args, **kwargs)
-		self.fields["inspectores"].queryset = Usuario.objects.filter(region=usuario.region)
+		self.fields["inspectores"].queryset = Usuario.objects.filter(region=usuario.region).exclude(username=usuario.username)
 		self.fields["comuna"] = forms.ChoiceField(choices=comunas[usuario.get_region_display()])
 	
 	def clean(self):

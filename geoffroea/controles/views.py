@@ -75,12 +75,11 @@ class UsuarioMixin(object):
 
 
 class ListarCCFF(UsuarioMixin, ListView):
-	
-    form = FormularioCCFF    
     
     def get_queryset(self):
-		self.usuario = get_object_or_404(Usuario, username=self.request.user)
-		return ControlesFronterizos.objects.filter(reqion=self.usuario.region)
+		self.usuario = get_object_or_404(Usuario, username=self.request.user.username)
+		return ControlesFronterizos.objects.filter(region=self.usuario.region)
+
 
 class DetallesCCFF(UsuarioMixin, DetailView):
 	
@@ -115,8 +114,8 @@ class ModificarCCFF(UsuarioMixin, UpdateView):
 class ListarInspector(UsuarioMixin, ListView):
     
     def get_queryset(self):
-		self.usuario = get_object_or_404(Usuario, username=self.request.user)
-		return Usuarios.objects.filter(reqion=self.usuario.region)
+		self.usuario = get_object_or_404(Usuario, username=self.request.user.username)
+		return Usuario.objects.filter(region__exact=self.usuario.region)
 
 
 class DetallesInspector(UsuarioMixin, DetailView):
