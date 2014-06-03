@@ -81,11 +81,6 @@ class ListarCCFF(UsuarioMixin, ListView):
 		return ControlesFronterizos.objects.filter(region=self.usuario.region)
 
 
-class DetallesCCFF(UsuarioMixin, DetailView):
-	
-	model = ControlesFronterizos
-
-
 class AgregarCCFF(UsuarioMixin, CreateView):
     
     model = ControlesFronterizos
@@ -117,12 +112,6 @@ class ListarInspector(UsuarioMixin, ListView):
 		self.usuario = get_object_or_404(Usuario, username=self.request.user.username)
 		return Usuario.objects.filter(region__exact=self.usuario.region)
 
-
-class DetallesInspector(UsuarioMixin, DetailView):
-	
-	model = Usuario
-	success_url = reverse_lazy('listar_insp')
-
 	    
 class AgregarInspector(UsuarioMixin, CreateView):
     
@@ -137,9 +126,13 @@ class BorrarInspector(UsuarioMixin, DeleteView):
 	
 
 class ModificarInspector(UsuarioMixin, UpdateView):
-    
-    model = Usuario
 
+	model = Usuario
+	form_class = FormularioPerfil
+	
+	def get_object(self, queryset=None):
+		obj = Usuario.objects.get(id=self.kwargs['id'])
+		return obj
 
 class Salir(View):
     

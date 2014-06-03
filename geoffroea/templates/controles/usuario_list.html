@@ -4,7 +4,7 @@
 <ul>
 	{% for usuario in object_list %}
 	<li>
-		<a href="{% url 'modificar_insp' %}">{{ usuario.get_full_name }}</a>
+		<a href="{{ usuario.slug }}">{{ usuario.get_full_name }}</a>
 		<a href="{% url 'borrar_insp' %}">borrar</a>
 	</li>
 	{% endfor %}

@@ -38,10 +38,24 @@ class UsuarioAdmin(UserAdmin):
     """
     form = UsuarioChangeForm
     add_form = UsuarioCreationForm
-    fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('cargo', 'region',)}),
+    #~ fieldsets = UserAdmin.fieldsets + (
+        #~ (None, {'fields': ('cargo', 'region',)}),
+    #~ )
+    fieldsets = (
+        (None, {'fields': ('email', 'password', 'region', 'cargo', 'slug')}),
+        (('Información Personal'), {'fields': ('first_name', 'last_name')}),
+        (('Permisos'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        (('Fechas Importantes'), {'fields': ('last_login', 'date_joined')}),
     )
-    list_display = ("username", "cargo", "region")
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'first_name', 'last_name', 'email', 'password1',
+                       'password2', 'region', 'cargo')}
+         ),
+    )
+    list_display = ("username", "cargo", "region", "slug", "get_full_name",)
     
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(ControlesFronterizos)

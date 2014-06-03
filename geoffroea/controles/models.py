@@ -2,28 +2,34 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
+from django.template.defaultfilters import slugify
 from localflavor.cl.cl_regions import REGION_CHOICES
 from .opciones import *
 
 
 class Usuario(AbstractUser):
-    """
-    Agrega mas campos al modelo de usuario que viene con django
-    """
-    cargo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
-    region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
-    
-    def get_full_name(self):
-        # El usuario es identificado por su nombre y apellido
-        return "%s %s" % (self.first_name, self.last_name)
-    
-    def get_short_name(self):
-        # El usuario es identificado sólo por su nombre
-        return self.first_name
-    
-    def __unicode__(self):
-        return "%s %s" % (self.first_name, self.last_name)
-    
+	"""
+	Agrega mas campos al modelo de usuario que viene con django
+	"""
+	cargo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
+	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
+	slug = models.SlugField(blank=True,unique=True)
+	  
+	def get_full_name(self):
+		# El usuario es identificado por su nombre y apellido
+		return "%s %s" % (self.first_name, self.last_name)
+	
+	def get_short_name(self):
+		# El usuario es identificado sólo por su nombre
+		return self.first_name
+	
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.get_full_name())
+		super(Usuario, self).save(*args, **kwargs)
+
+	def __unicode__(self):
+		return "%s %s" % (self.first_name, self.last_name)
+	
 class ControlesFronterizos(models.Model):
 
 	nombre = models.CharField(unique=True, max_length=30)
