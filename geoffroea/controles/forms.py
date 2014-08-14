@@ -13,11 +13,43 @@ class FormularioPerfil(forms.ModelForm):
 				("insp", "Inspector(a)"))
 		super(FormularioPerfil, self).__init__(*args, **kwargs)
 		self.fields["cargo"] = forms.ChoiceField(choices=opciones)
+		self.fields["region"].widget = forms.HiddenInput()
+		self.fields["clave1"] = forms.CharField(widget=forms.PasswordInput(),label="Contraseña")
+		self.fields["clave2"] = forms.CharField(widget=forms.PasswordInput(),label="Repite la contraseña")
+	
+	def clean_clave2(self):
+		clave1 = self.cleaned_data.get("clave1", "")
+		clave2 = self.cleaned_data["clave2"]
+		if clave1 != clave2:
+			raise forms.ValidationError(("las contraseñas no coinciden"))
+		return clave2
+		
+	def save(self, commit=True):
+		usuario = super(FormularioPerfil, self).save(commit=False)
+		usuario.set_password(self.cleaned_data["clave1"])
+		if commit:
+			usuario.save()
+		return usuario
 	
 	class Meta:
 		model = Usuario
-		fields = ("username", "password", "first_name", "last_name", "cargo",)
+		fields = ("username", "first_name", "last_name", "cargo", "region", "controles")
+	
+	# Para poder asignar controles a cada usuario, se llama un campo del tipo
+	# modelmultiplechoicefield y se le asignan los valores obtenidos del
+	# queryset al modelo controlesfronterizos
+	
+	controles = forms.ModelMultipleChoiceField(
+		queryset = ControlesFronterizos.objects.all(),
+		required = True,
+		)
 
+class ModificacionPerfil(forms.ModelForm):
+	# Para modificar aspectos del usuario por el eerr en el frontend
+	
+	class Meta:
+		model = Usuario
+		fields = ("cargo",)
 
 class FormularioCCFF(forms.ModelForm):
 	
@@ -38,11 +70,11 @@ class FormularioCCFF(forms.ModelForm):
 					u"Si el control funciona en turnos debes asignar horario de término"
 				)
 				
-		return sef.cleaned_data
+		return self.cleaned_data
 
 	class Meta:
 		model = ControlesFronterizos
-		exclude = ("region",)
+		exclude = ("region", "slug")
 		
 
 class FormularioDia(forms.ModelForm):

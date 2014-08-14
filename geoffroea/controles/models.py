@@ -1,5 +1,6 @@
   # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AbstractUser
 from django_countries.fields import CountryField
 from django.template.defaultfilters import slugify
@@ -14,6 +15,7 @@ class Usuario(AbstractUser):
 	cargo = models.CharField(choices=tipos_usuarios,max_length=4,blank=False)
 	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
 	slug = models.SlugField(blank=True,unique=True)
+	#controles = models.ManyToManyField(ControlesFronterizos)
 	  
 	def get_full_name(self):
 		# El usuario es identificado por su nombre y apellido
@@ -27,6 +29,9 @@ class Usuario(AbstractUser):
 		self.slug = slugify(self.get_full_name())
 		super(Usuario, self).save(*args, **kwargs)
 
+	def get_absolute_url(self):
+		return reverse('modificar_insp', args=[self.slug])
+
 	def __unicode__(self):
 		return "%s %s" % (self.first_name, self.last_name)
 	
@@ -35,14 +40,22 @@ class ControlesFronterizos(models.Model):
 	nombre = models.CharField(unique=True, max_length=30)
 	region = models.CharField(choices=REGION_CHOICES,max_length=55,blank=False)
 	tipo = models.CharField(choices=tipo_ccff, max_length=10,blank=False)
-	inspectores = models.ManyToManyField(Usuario,null=True)
+	inspectores = models.ManyToManyField(Usuario)
 	latitud = models.DecimalField(max_digits=11,decimal_places=8)
 	longitud = models.DecimalField(max_digits=11,decimal_places=8)
 	turno = models.CharField(choices=horarios_ccff,max_length=12)
-	horario_inicio = models.TimeField(null=True)
-	horario_termino = models.TimeField(null=True)
+	horario_inicio = models.TimeField(null=True,blank=True)
+	horario_termino = models.TimeField(null=True,blank=True)
 	comuna = models.CharField(max_length=25,blank=False)
 	codigo = models.CharField(max_length=8,blank=False)
+	slug = models.SlugField(blank=True,unique=True)
+	
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.nombre)
+		super(ControlesFronterizos, self).save(*args, **kwargs)
+	
+	def get_absolute_url(self):
+		return reverse('modificar_ccff', args=[self.slug])
 
 	def __unicode__(self):
 		return self.nombre

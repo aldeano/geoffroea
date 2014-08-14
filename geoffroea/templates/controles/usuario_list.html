@@ -4,8 +4,8 @@
 <ul>
 	{% for usuario in object_list %}
 	<li>
-		<a href="{{ usuario.slug }}">{{ usuario.get_full_name }}</a>
-		<a href="{% url 'borrar_insp' %}">borrar</a>
+		<a href="{{ usuario.get_absolute_url }}">{{ usuario.get_full_name }}</a>
+		<a href="{% url 'borrar_insp' usuario.slug %}">borrar</a>
 	</li>
 	{% endfor %}
 </ul>

@@ -10,47 +10,47 @@ from .forms import FormularioPerfil, FormularioDia, FormularioCCFF
 
 class PortadaFuri(View):
 
-    def get(self, request):
-        
-        formulario = AuthenticationForm()
-        dicc = {'formulario': formulario}
-        return render(request, "index.html", dicc)
+	def get(self, request):
+		
+		formulario = AuthenticationForm()
+		dicc = {'formulario': formulario}
+		return render(request, "index.html", dicc)
 
-    def post(self, request, *args, **kwargs):
-        
-        formulario = AuthenticationForm(data=request.POST)
-        dicc = {'formulario': formulario}
-        if formulario.is_valid:
-            usuario = request.POST['username']
-            clave = request.POST['password']
-            acceso = authenticate(username=usuario, password=clave)
-            if acceso is not None:
-                if acceso.is_active:
-                    login(request, acceso)
-                    return redirect('gestion_registros')
-                else:
-                    return render(request, 'index.html', dicc)
-            else:
-                return render(request, 'index.html', dicc)
-        else:
-            return render(request, 'index.html', dicc)
-    
-    
+	def post(self, request, *args, **kwargs):
+		
+		formulario = AuthenticationForm(data=request.POST)
+		dicc = {'formulario': formulario}
+		if formulario.is_valid:
+			usuario = request.POST['username']
+			clave = request.POST['password']
+			acceso = authenticate(username=usuario, password=clave)
+			if acceso is not None:
+				if acceso.is_active:
+					login(request, acceso)
+					return redirect('gestion_registros')
+				else:
+					return render(request, 'index.html', dicc)
+			else:
+				return render(request, 'index.html', dicc)
+		else:
+			return render(request, 'index.html', dicc)
+	
+	
 class GestionRegistros(View):
 
-    def get(self, request):
-        
-        usuario = request.user
-        perfil = Usuario.objects.get(username=usuario.username)
-        dicc = {"nombre": perfil.first_name, "region": perfil.get_region_display(), "cargo": perfil.get_cargo_display()}
-        if perfil.cargo == "adm":
-            template = "controles/admin.html"
-        elif perfil.cargo == "er":
-            template = "controles/er.html"
-        elif perfil.cargo == "jf" or perfil.cargo == "insp":
-            template = "controles/dia.html"
-        
-        return render(request, template, dicc)
+	def get(self, request):
+		
+		usuario = request.user
+		perfil = Usuario.objects.get(username=usuario.username)
+		dicc = {"nombre": perfil.first_name, "region": perfil.get_region_display(), "cargo": perfil.get_cargo_display()}
+		if perfil.cargo == "adm":
+			template = "controles/admin.html"
+		elif perfil.cargo == "er":
+			template = "controles/er.html"
+		elif perfil.cargo == "jf" or perfil.cargo == "insp":
+			template = "controles/dia.html"
+		
+		return render(request, template, dicc)
 
 
 class UsuarioMixin(object):
@@ -75,23 +75,21 @@ class UsuarioMixin(object):
 
 
 class ListarCCFF(UsuarioMixin, ListView):
-    
-    def get_queryset(self):
-		self.usuario = get_object_or_404(Usuario, username=self.request.user.username)
-		return ControlesFronterizos.objects.filter(region=self.usuario.region)
-
+	
+	queryset = ControlesFronterizos.objects.all()
 
 class AgregarCCFF(UsuarioMixin, CreateView):
-    
-    model = ControlesFronterizos
-    form_class = FormularioCCFF
-    success_url = reverse_lazy('listar_ccff')
-    
-    def get_form_kwargs(self):
-        kwargs = super(AgregarCCFF, self).get_form_kwargs()
-        kwargs.update({'usuario': self.request.user})
-        return kwargs
-    
+	
+	model = ControlesFronterizos
+	form_class = FormularioCCFF
+	success_url = reverse_lazy('listar_ccff')
+	
+	# así se obtienen los datos del usuario
+	def get_form_kwargs(self):
+		kwargs = super(AgregarCCFF, self).get_form_kwargs()
+		kwargs.update({'usuario': self.request.user})
+		return kwargs
+	
 
 class BorrarCCFF(UsuarioMixin, DeleteView):
 	
@@ -107,38 +105,48 @@ class ModificarCCFF(UsuarioMixin, UpdateView):
 
 
 class ListarInspector(UsuarioMixin, ListView):
-    
-    def get_queryset(self):
+	
+	def get_queryset(self):
 		self.usuario = get_object_or_404(Usuario, username=self.request.user.username)
 		return Usuario.objects.filter(region__exact=self.usuario.region)
 
-	    
+		
 class AgregarInspector(UsuarioMixin, CreateView):
-    
-    model = Usuario
-    form_class = FormularioPerfil
-    success_url = reverse_lazy('listar_insp')
+	
+	model = Usuario
+	form_class = FormularioPerfil
+	success_url = reverse_lazy('listar_insp')
+	
+	def get_initial(self):
+		
+		usuario = get_object_or_404(Usuario, username=self.request.user.username)
+		return {'region': usuario.region}
 
 
 class BorrarInspector(UsuarioMixin, DeleteView):
 	
 	model = Usuario
+	success_url = reverse_lazy("listar_insp")
 	
 
 class ModificarInspector(UsuarioMixin, UpdateView):
 
 	model = Usuario
 	form_class = FormularioPerfil
+	template_name_suffix = "_modificar_form"
+	success_url = reverse_lazy('listar_insp')
 	
-	def get_object(self, queryset=None):
-		obj = Usuario.objects.get(id=self.kwargs['id'])
-		return obj
+	def get_initial(self):
+		
+		usuario = get_object_or_404(Usuario, username=self.request.user.username)
+		return {'clave1': usuario.password,
+				'clave2': usuario.region}
 
 class Salir(View):
-    
-    def get(self,request):
-        
-        logout(request)
-        return redirect('inicio')
+	
+	def get(self,request):
+		
+		logout(request)
+		return redirect('inicio')
 
 

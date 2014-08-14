@@ -2,10 +2,10 @@
 {% block gestion %}
 <p>Controles</p>
 <ul>
-	{% for control in ControlesFronterizos_list %}
+	{% for control in object_list %}
 	<li>
-		<a href="{% url 'control_edit' control.id %}">{{ control.nombre }}</a>
-		<a href="{% url 'control_delete' control.id %}">borrar</a>
+		<a href="{{ control.get_absolute_url }}">{{ control.nombre }}</a>
+		<a href="{% url 'borrar_ccff' control.slug %}">borrar</a>
 	</li>
 	{% endfor %}
 </ul>
